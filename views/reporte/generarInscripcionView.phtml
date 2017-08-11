@@ -1,0 +1,201 @@
+<?php
+ob_start();
+//$_SESSION["emision_de_constancia"] = true;
+$nombre_emision = explode(" ", $_SESSION["nombre_sesion"]);
+$apellido_emision = explode(" ", $_SESSION["apellido_sesion"]);
+?>
+<style type="text/css">
+    *{       
+        font-size: 12pt;
+        line-height: 1.5;
+        font-family: arial;
+        color:#000;
+        margin:0;
+        padding:0;
+    }
+    .banner{
+        width: auto;
+        margin: auto;
+        text-align: center;
+        margin-top: 30px;
+        padding: 0; 
+        
+    }
+    .banner img {
+        width: 650px;
+        height: 70px;
+    }
+    #cuerpo {
+        margin: auto;
+        width: 100%;
+        height:auto;
+        border:0px;        
+    }
+    #tema {
+        margin: auto;
+        margin-top: 15px;
+        margin-bottom: 30px;
+        text-align:center;
+        font-weight: bold;
+    }
+    table {
+        margin: auto;
+        width: 100%;        
+        border-collapse: collapse;        
+    }
+    table td {
+        width: 50%;
+        border:1px solid #cbcbcb;        
+        padding: 4px 4px;
+    }
+    #asignatura td {
+        width: 33.33%;
+        border:1px solid #cbcbcb;        
+        padding: 4px 4px;
+    }
+    .subtitulo-tabla {
+        background: #9A121B;
+        color: white;
+        font-weight: bold;
+        text-transform:none;
+    }
+    .descripcion-tabla { 
+        background: #f9f9f9;
+        font-weight: bold;
+    }
+    #pie-de-pagina {        
+        heigh:auto;        
+        margin:auto;
+        font-size: 10pt;       
+    }
+    #pagina {  
+        position: relative;
+        font-size: 10pt;
+        left:60px;
+        text-align: left;
+    }
+    #datos-emision {
+        position: relative;
+        top:-20px;
+        font-size: 10pt;
+        text-align: right;
+        right:60px;
+    }
+  </style>
+
+<page backtop='30mm' backbottom='20mm' backleft='20mm' backright='20mm'>
+    <page_header>
+        <div class="banner" ><img src="<?php echo URLBASE; ?>/public/img/<?php echo $institucion["img_reporte"]; ?>" /></div>
+    </page_header>
+    <page_footer>
+        <div id="pie-de-pagina">
+            <div id="pagina">Página [[page_cu]]/[[page_nb]]</div>
+            <div id="datos-emision">Emitido por <?php echo $nombre_emision[0] . " " . $apellido_emision[0];  ?>, el <?php echo date("d/m/Y"); ?> a las <?php echo date('h:i:s A'); ?></div> 
+        </div>
+    </page_footer>
+    <div id="cuerpo">
+        <div id="tema"><?php echo $tema ." " . $tipoEducacion; ?></div>
+        <table cellspacing="0" id="datos">
+            <tr >                
+                <td class="subtitulo-tabla" colspan="2">Datos de la Inscripción</td>                
+            </tr>
+            <tr>                
+                <td class="descripcion-tabla" >N° de Inscripción</td>
+                <td><?php echo $_inscripcionEstudiante[0]["id"]; ?></td>
+            </tr>
+            <tr>                
+                <td class="descripcion-tabla">Período Escolar</td> 
+                <td><?php echo $_inscripcionEstudiante[0]["periodo_academico"]; ?></td>
+            </tr>
+            <tr>                
+                <td class="descripcion-tabla">Fecha de Inscripción</td> 
+                <td><?php echo AsistenteBasico::convertirFechaDdMmAaaa($_inscripcionEstudiante[0]["fecha_inscripcion"]); ?></td>
+            </tr>
+            <tr>                
+                <td class="subtitulo-tabla" colspan="2">Datos del Estudiante</td>                
+            </tr>
+            <tr>
+                <td class="descripcion-tabla">Nombres y Apellidos</td>
+                <td><?php echo $_inscripcionEstudiante[0]["nombre"] . " " . $_inscripcionEstudiante[0]["apellido"];  ?></td>
+            </tr>
+            <tr>
+                <td class="descripcion-tabla">Documento de Identidad</td>
+                <td><?php echo $_inscripcionEstudiante[0]["tipo_dni"] . "-" . $_inscripcionEstudiante[0]["dni"]; ?></td>
+            </tr> 
+            <tr>
+                <td class="descripcion-tabla">Edad</td>
+                <td><?php echo AsistenteBasico::obtenerEdad($_inscripcionEstudiante[0]["fecha_natal"]) . " años"; ?></td>
+            </tr>  
+            <tr>
+                <td class="descripcion-tabla">Teléfono</td>
+                <td><?php echo $_inscripcionEstudiante[0]["telefono"];?></td>
+            </tr>
+            <tr>
+                <td class="descripcion-tabla" >Dirección Habitacional</td>
+                <td><?php echo $_inscripcionEstudiante[0]["direccion"]; ?></td>
+            </tr>
+            <tr>
+                <td class="descripcion-tabla" >Lugar de Nacimiento</td>
+                <td><?php echo $_inscripcionEstudiante[0]["lugar_nacimiento"]; ?></td>
+            </tr>
+            <tr>                
+                <td class="subtitulo-tabla" colspan="2">Responsable de la Inscripción</td>                
+            </tr>
+            <tr>
+                <td class="descripcion-tabla">Nombres y Apellidos</td>
+                <td><?php echo $_inscripcionResponsable[0]["nombre"] . " " . $_inscripcionResponsable[0]["apellido"]; ?></td>
+            </tr>
+            <tr>
+                <td class="descripcion-tabla">Documento de Identidad</td>
+                <td><?php echo $_inscripcionResponsable[0]["tipo_dni"] . "-" . $_inscripcionResponsable[0]["dni"]; ?></td>
+            </tr>
+            <!--<tr>
+                <td class="descripcion-tabla">Firma</td>
+                <td><?php ?></td>
+            </tr>-->
+        </table>
+        <br/>
+        
+        <table id="asignatura">
+            <tr>
+                <td class="subtitulo-tabla" colspan="3" align="center">Asignaturas Inscritas</td>
+            </tr>
+            <tr align="center">
+                <td class="descripcion-tabla">#</td>
+                <td class="descripcion-tabla">Asignatura</td>
+                <td class="descripcion-tabla">Semestre</td>
+            </tr>
+<?php for ($i=0; $i<count($_inscripcionEstudiante); $i++): ?>        
+            <tr align="center">
+                <td><?php echo $i+1; ?></td>
+                <td><?php echo $_inscripcionEstudiante[$i]["asignatura"]; ?></td>
+                <td><?php echo $_inscripcionEstudiante[$i]["semestre"]; ?></td>
+            </tr>
+<?php endfor; ?>
+        </table>
+        
+    </div>
+
+
+    
+  
+</page>
+<?php
+     $contenido = ob_get_clean();
+     $salida = "Inscripción_nro_".$_inscripcionEstudiante[0]["id"] . ".pdf";
+ob_clean();
+    try
+    {
+    $html2pdf = new HTML2PDF('P','Letter','es','true','UTF-8');
+    $html2pdf->setDefaultFont('Arial');
+    $html2pdf->pdf->SetDisplayMode('fullpage');
+    $html2pdf->writeHTML($contenido, isset($_GET['vuehtml']));
+    $html2pdf->Output($salida);
+
+
+    }
+    catch(HTML2PDF_exception $e) {
+        echo $e;
+        exit;
+    }
+

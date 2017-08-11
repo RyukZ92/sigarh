@@ -1,0 +1,132 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+?>
+<script>
+$(document).ready(function(){
+   $("#semestre").change(function () {
+       $("#semestre option:selected").each(function () {
+            id = $(this).val();
+            $.post("public/js/ajax/obtenerSeccionPorSemestre.php", { id: id }, function(data){
+                $("#seccion").html(data);//Destino
+            });            
+        });
+   })
+});
+</script>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if(count($_asignatura) == 0):
+    echo $alerta["no_asignatura_disponible"];
+?>
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href="javascript:void();" onClick="window.location='seleccionar-estudiante-extraordinario'" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono' >Volver Atrás</div>
+            </a>
+        </div>
+    </div>
+<?php
+else:
+    if ($notificacion):
+        echo $notificacion;
+    endif;
+    if($_SESSION["continuar"] == null):
+    ?>
+    <form class="pure-form pure-form-aligned" method="POST">
+        <fieldset>
+            <table class="pure-table pure-table-bordered" id="formulario">  
+                <thead>
+                    <tr>
+                        <th>Selección</th>
+                        <th>Asignatura</th>
+                        <th>Notas</th>
+                    </tr>
+                </thead>
+                <tbody>
+        <?php for ($i=0; $i<count($_asignatura); $i++): 
+                $disabled = (isset($_POST["check_$i"])) ? "":"disabled";
+            ?>
+
+                    <tr>    
+                        <td align="center">
+                            <label for="name"><input type="checkbox" name="check_<?php echo $i; ?>" value="<?php ?>" onClick="desactivarNota(this, 'nota_<?php echo $i; ?>');" <?php if (isset($_POST["check_$i"])) {echo "checked";}   ?>
+                        </td>
+                        <td>
+                            <?php echo $_asignatura[$i]["nombre"] ?>
+                            <input type="hidden" name="asignatura_<?php echo $i; ?>" value="<?php echo $_asignatura[$i]["codigo"]; ?>">
+                            <input type="hidden" name="nombre_asignatura_<?php echo $i; ?>" value="<?php echo $_asignatura[$i]["nombre"]; ?>">
+                        </td>
+                        <td>
+                            <input type="text" class="notas" onKeyPress="return soloNumeroEntero(event);" placeholder="Nota del Extraordinario" maxlength="5" name="nota_<?php echo $i; ?>" value="<?php echo $_POST["nota_$i"]; ?>" autocomplete="off" id="nota_<?php echo $i; ?>" <?php echo $disabled; ?> required>
+                        </td>         
+                    </tr>
+        <?php endfor; ?>            
+                    <tr align="center">
+                        <td  colspan="3" align="center">
+                            <input type="button" class="btn btn-success" value="Atrás" name="Atrás" onCLick="history.back();">  
+
+                            <input type="submit" class="btn btn-success" value="Continuar" name="continuar">
+                        </td>   
+                    </tr>
+                </tbody>
+            </table>    
+        </fieldset>
+    </form>
+    <?php endif;
+        if ($_SESSION["continuar"] == true):
+    ?>
+    <form class="pure-form pure-form-aligned" method="POST">
+        <input type="hidden" name="total" value="<?php echo count($_SESSION["nombre_asignatura"]); ?>">
+        <fieldset>
+            <table class="pure-table pure-table-bordered" id="formulario">  
+                <thead>
+                    <tr>
+                        <th colspan="2">Extraordinario del <?php echo $_SESSION["nombre_semestre"]; ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label>Asignatura</label></td>
+                        <td><label>Nota</label></td>
+                    </tr>
+        <?php for ($i=0; $i<count($_SESSION["nombre_asignatura"]); $i++): 
+            ?>
+
+                    <tr>    
+                        <td>
+                            <?php echo $_SESSION["nombre_asignatura"][$i]; ?>
+                            <input type="hidden" name="asignatura_<?php echo $i; ?>" value="<?php echo $_SESSION["asignatura"][$i]; ?>">
+                            <input type="hidden" name="nota_<?php echo $i; ?>" value="<?php echo $_SESSION["nota"][$i]; ?>">
+
+                        </td>
+                        <td>
+                            <?php echo $_SESSION["nota"][$i]; ?>
+                        </td>         
+                    </tr>
+        <?php endfor; ?> 
+                    <tr>
+                        <td colspan="2"><label>Estudiante:</label> <?php echo $_estudiante[0]["tipo_dni"] . "-" . $_estudiante[0]["dni"] . " " . $_estudiante[0]["nombre"] . " " . $_estudiante[0]["apellido"]; ?></td>
+                    </tr>
+                    <tr align="center">  
+                        <div class="pure-control-group">
+                            <td  colspan="3" align="center">
+                                <input type="button" class="btn btn-primary" value="Atrás" name="Atrás" onCLick="history.back();">  
+
+                                <input type="submit" class="btn btn-primary" value="Confirmar" name="confirmar">
+                            </td>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>    
+        </fieldset>
+    </form>
+<?php   endif; 
+endif;
+?>

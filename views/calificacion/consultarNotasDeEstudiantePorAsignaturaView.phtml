@@ -1,0 +1,66 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+$cantidadNotas = 5;
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<table class="pure-table pure-table-striped" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Documento</th>
+            <th>Nombre y Apellido</th>
+<?php for ($i=1; $i<=$cantidadNotas; $i++): ?>  
+            <th>Nota <?php echo $i; ?></th>
+<?php endfor; ?>    
+            <th>Nota Final</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+for ($i=0; $i<COUNT($_estudiante); $i++):
+    $_horarioAsignatura = $objCrudGenerica->consultar("horario_asignatura", array("codigo_asignatura"), "id = '" . $_SESSION["asignatura"] . "'", null);
+    $tabla = "calificacion c JOIN inscripcion i ON (c.id_inscripcion = i.id)";
+    $datos = array("c.id");
+    $condicion = "periodo_academico = '" . $_SESSION["periodo"] . "' AND c.codigo_asignatura = '" . $_horarioAsignatura[0]["codigo_asignatura"] . "' AND i.dni_estudiante = '" . $_estudiante[$i]["dni"] . "'";
+    $orden = null;
+    $_calificacion = $objCrudGenerica->consultar($tabla, $datos, $condicion, $orden);
+    $_SESSION["id_calificacion"][$i] = $_calificacion[0]["id"];
+    $_nota = $objCrudGenerica->consultar("nota", null, "id_calificacion = '" . $_SESSION["id_calificacion"][$i] . "'", "id ASC");
+    $_promedio = $objCrudGenerica->consultar("nota", array("round(AVG(nota)) AS promedio"), "id_calificacion = '" . $_SESSION["id_calificacion"][$i] . "' AND nota > 0", null);
+    $nombre = explode(" ", $_estudiante[$i]["nombre"]);
+    $apellido = explode(" ", $_estudiante[$i]["apellido"]);
+    $promedio = $_promedio[0]["promedio"] ? $_promedio[0]["promedio"] : 0;
+    echo "<tr>
+            <td>" . $_estudiante[$i]["tipo_dni"] . "-" .$_estudiante[$i]["dni"] . "</td>
+            <td>" . $nombre[0] . " " . $apellido[0] . "</td>";
+        for ($j=0; $j<$cantidadNotas; $j++):
+            $nota = ($_nota[$j]["nota"] > 0) ? $_nota[$j]["nota"] : 0 ;
+            echo "<td>$nota</td>";
+         endfor;
+         
+    echo "<td>" . $promedio . "</td>
+    </tr>";
+
+endfor;
+$datos = count($_estudiante) ? "Asignatura: <label>" . $_estudiante[0]["asignatura"] . "</label> del <label>" . $_estudiante[0]["semestre"] . "</label>": "<span style='color:red;'>No hay estudiantes inscritos en esta asignatura</span>";
+        ?>
+    <tr>
+        <td colspan="7"><?php echo $datos;?></td>
+        <td colspan="1" align="center">  <a href="<?php echo URLBASE; ?>actualizar-notas-estudiante">Actualizar Notas</a></td>
+    </tr>
+    </tbody>
+</table>
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="window.location='<?php echo URLBASE; ?>seleccionar-tipo-de-calificacion'" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+    </div>

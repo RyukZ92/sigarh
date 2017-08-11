@@ -1,0 +1,128 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+        <table style="margin:auto;">
+            <tr>
+                <td> 
+                    <form class="pure-form pure-form-aligned" method="POST" onSubmit="return validarCampoBuscar('semestre')">
+                        <select name="semestre" id="semestre">
+                            <option value="0">Semestre</option>
+                <?php for ($i=0; $i<count($_semestre); $i++): ?>                            
+                            <option value="<?php echo $_semestre[$i]["id"]; ?>"><?php echo $_semestre[$i]["nombre"]; ?></option>
+                <?php endfor; ?>
+                        </select>
+                        <input type="submit" value="Buscar" class="btn btn-default">
+                     </form>
+                        <ul id="lista_dni"></ul>
+                </td>
+            </tr>
+        </table>    
+<br>
+<table class="pure-table pure-table-bordered" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Semestre</th>
+            <th>Editar</th>
+            <th style="text-align: center;">Horas</th>
+            <!--<th>Ver Horas</th>-->
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+	for ($i=0; $i<COUNT($_asignatura); $i++):
+
+        echo "<tr>
+                <td>" . $_asignatura[$i]["codigo"] . "</td>
+                <td>" . $_asignatura[$i]["nombre_asignatura"] . "</td>
+                <td>" . $_asignatura[$i]["nombre_semestre"] . "</td>
+                <td title='Editar' align=center>
+                    <form method='POST' action='" . URLBASE . "editar-asignatura'>
+                        <input type='hidden' name='pagina_referencia' value='" . $_GET["pagina"] ."'>
+                            <input type='hidden' name='codigo_asignatura' value='" . $_asignatura[$i]["codigo"] ."'>
+                        <input type='image'src='" . URLBASE . "public/img/pencil.png'/>
+                    </form>
+                </td>
+                <td title='Asignar Horario' align=center>
+                    <form method='POST' action='" . URLBASE . "asignar-horario'>
+                            <input type='hidden' name='pagina_referencia' value='" . $_GET["pagina"] ."'>
+                            <input type='hidden' name='codigo_asignatura' value='" . $_asignatura[$i]["codigo"] ."'>
+                        <input type='image'src='" . URLBASE . "public/img/asignar.png'/>
+                    </form>
+                </td>
+                <!--<td title='Horario Asignado' align=center>
+                    <form method='POST' action='" . URLBASE . "consultar-horario-de-asignatura'>
+                            <input type='hidden' name='pagina_referencia' value='" . $_GET["pagina"] ."'>
+                            <input type='hidden' name='codigo_asignatura' value='" . $_asignatura[$i]["codigo"] ."'>
+                        <input type='image'src='" . URLBASE . "public/img/asignar.png'/>
+                    </form>
+                </td>-->
+            </tr>";
+	endfor; ?>
+            <tr class="pure-table-odd">
+                <td colspan="2" align="center"><a href="<?php echo URLBASE; ?>registrar-seccion"><img src="<?php echo URLBASE; ?>public/img/add.png"> Registrar Sección</a></td>    
+                <td colspan="2" align="center"><a href="<?php echo URLBASE; ?>consultar-seccion"><img src="<?php echo URLBASE; ?>public/img/search.png"> Consultar Secciones</a></td>    
+                <td colspan="1" align="center"><a href="<?php echo URLBASE; ?>consultar-horario-por-asignatura"><img src="<?php echo URLBASE; ?>public/img/search.png"> Horarios</a></td>    
+            </tr>
+    </tbody>
+</table>
+<div class='paginador' align='center' >
+        <ul>
+            <li>
+            <?php if($params['primero']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['primero']; ?>">
+                <input type="button" value="Primera" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                    <input type="button" value="Primera" disabled class="btn-disabled" />
+            <?php	endif; ?>
+
+            </li>
+            <li>
+            <?php if($params['anterior']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['anterior']; ?>">
+                <input type="button" value="&larr; Anterior"  class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="&larr; Anterior" disabled class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['siguiente']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['siguiente']; ?>">
+                <input type="button" value="Siguiente &rarr;" class="btn-enabled" />
+                </a>	
+            <?php	else: ?>
+                <input type="button" value="Siguiente &rarr;" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['ultimo']):	?>
+                <a  class='parametro'  class='parametro' href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['ultimo']; ?>">
+                <input type="button" value="Última" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="Última" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+        </ul>
+    </div>
+   <!--<div id='icono-papelera-y-regresar'>
+<?php if ($pagina < 2): ?>        
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="history.back();" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+<?php endif;?>        
+    </div>-->

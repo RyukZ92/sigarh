@@ -1,0 +1,47 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+
+<form class="pure-form pure-form-aligned" method="POST">
+    <fieldset>
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="1">Seleccione una Opción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    
+                    <td>
+                        <input type="radio" value="S" name="respuesta"> Inscribir más notas certificadas de otra institución.
+                        <br>
+                        <br>
+                        <input type="radio" value="N" name="respuesta"> Sólo deseo continuar.
+                    </td>
+
+                </tr>                
+                <tr align="center">                       
+                    <td  colspan="2" align="center">
+                        <input type="reset" class="btn btn-primary" value="Volver" name="volver" onCLick="history.back();">  
+
+                        <input type="submit" class="btn btn-primary" value="Continuar" name="continuar">
+                    </td>
+                </tr>          
+            </tbody>
+        </table>    
+    </fieldset>
+</form>

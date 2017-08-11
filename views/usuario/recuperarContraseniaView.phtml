@@ -1,0 +1,71 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+<!--<div class="formulario" align="center" >-->
+<form class="pure-form pure-form-aligned" method="POST">
+    <fieldset>
+        
+        <table class="pure-table pure-table-bordered" id="formulario">
+            <thead>
+                <tr>
+                    <th colspan="2">Datos del Usuario para la Recuperación de Contraseña</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="right">
+                        <label  for="state">Opción de Recuperación</label>
+                    </td>
+                    <td>
+                        <select id="opcion_recuperacion" name="opcion_recuperacion" onClick="if(document.getElementById('opcion_recuperacion').value == 'email') {document.getElementById('documento').disabled = true;document.getElementById('user').disabled = true;} else {document.getElementById('documento').disabled = false;document.getElementById('user').disabled = false;}">
+                            <option value="0">Seleccione</option>
+                            <option value="pregunta" <?php if ($_POST["opcion_recuperacion"] == "pregunta") { echo "selected"; }?>>Pregunta y Respuesta Secreta</option>
+                            <option value="email" <?php if ($_POST["opcion_recuperacion"] == "email") { echo "selected"; }?>>Correo Electrónico</option>                            
+                        </select>
+                        <span class='campo-obligatorio'>*</span>
+                    </td>      
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="name">Documento</label>
+                    </td>
+                    <td>
+                        <input id="documento" autocomplete="off" type="text" placeholder="Documento de Identidad" maxlength="8" name="dni" value="<?php echo $_POST["dni"]; ?>">
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr>
+                <tr>  
+                    <td align="right">
+                        <label for="name">Usuario</label>
+                    </td>
+                    <td>
+                        <input id="user" autocomplete="off" type="text" placeholder="Usuario" maxlength="20" name="usuario" value="<?php echo $_POST["usuario"]; ?>">
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                    
+                </tr>             
+                <tr>
+                    <td  colspan="2" align="center">
+                        <input type="button" class="btn btn-primary" value="Salir" onClick="window.location='<?php echo URLBASE; ?>'">
+                        <input type="submit" class="btn btn-primary" value="Enviar" name="enviar">
+                    </td>                   
+                </tr>
+            </tbody>  
+        </table>
+    </fieldset>
+</form>
+<!--</div>
+-->

@@ -1,0 +1,202 @@
+<?php
+ob_start();
+//$_SESSION["emision_de_constancia"] = true;
+$nombre = explode(" ", $_SESSION["nombre_sesion"]);
+$apellido = explode(" ", $_SESSION["apellido_sesion"]);
+?>
+<style type="text/css">
+    *{       
+        font-size: 10pt;
+        line-height: 1.5;
+        font-family: arial;
+        color:#000;
+        margin:0;
+        padding:0;
+    }
+    .banner{
+        width: auto;
+        margin: auto;
+        text-align: center;
+        margin-top: 30px;
+        padding: 0; 
+        
+    }
+    .banner img {
+        width: 650px;
+        height: auto;
+    }
+    #cuerpo {
+        margin: auto;
+        width: 100%;
+        height:auto;
+        border:0px;        
+    }
+    #tema {
+        font-size: 12pt;
+        margin: auto;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        text-align:center;
+        font-weight: bold;
+    }
+	table.datos-personales {
+		width: 100%;        
+        border-collapse: collapse; 
+		
+	}
+	.datos-personales td, .datos-personales th {
+		width:50%;
+		border:1px solid #cbcbcb;        
+        padding: 4px 2px;
+		
+	}
+	.datos-personales th.titulo {
+		background: #9A121B;
+		color:white;
+	}
+    table.record {
+        margin: auto;
+	width: 100%;        
+        border-collapse: collapse; 		
+    }
+    .record td {
+        width: 16.66%;
+        border:1px solid #cbcbcb;        
+        padding: 4px 2px;
+    }    
+    .subtitulo-tabla {
+        background: #9A121B;
+        color: white;
+        font-weight: bold;
+        text-transform:none;
+    }
+    .descripcion-tabla { 
+        background: #f9f9f9;
+        font-weight: bold;
+    }
+    table.leyenda {
+        margin: auto;
+        width: 100%;        
+        border-collapse: collapse;        
+    }
+    .leyenda td {
+        width: 25.0%;
+        border:0px solid #cbcbcb;
+        padding: 0px 2px;
+    }  
+    #pie-de-pagina {        
+        heigh:auto;        
+        margin:auto;
+        font-size: 10pt;       
+    }
+    #pagina {  
+        position: relative;
+        font-size: 10pt;
+        left:60px;
+        text-align: left;
+    }
+    #datos-emision {
+        position: relative;
+        top:-20px;
+        font-size: 10pt;
+        text-align: right;
+        right:60px;
+    }
+  </style>
+
+<page backtop='30mm' backbottom='20mm' backleft='20mm' backright='20mm'>
+    <page_header>
+        <div class="banner" ><img src="<?php echo URLBASE; ?>/public/img/<?php echo $institucion["img_reporte"]; ?>" /></div>
+    </page_header>
+    <page_footer>
+        <div id="pie-de-pagina">
+            <div id="pagina">Página [[page_cu]]/[[page_nb]]</div>
+            <div id="datos-emision">Emitido por <?php echo $nombre[0] . " " . $apellido[0];  ?>, el <?php echo date("d/m/Y"); ?> a las <?php echo date('h:i:s A'); ?></div> 
+        </div>
+    </page_footer>
+    <div id="cuerpo">
+        <div id="tema"><?php echo $tema ." " . $tipoEducacion; ?></div>        
+        <table class="datos-personales">
+			<tr>
+				<th colspan="2" align="center" class="titulo">Datos del Estudiante</th>
+			</tr>
+			<tr>
+				<th>Nombres y Apellidos</th>
+				<td><?php echo $_estudiante[0]["estudiante"];?></td>
+			</tr>
+			<tr>
+				<th>Documento de Identidad</th>
+				<td><?php echo $_estudiante[0]["tipo_dni"] . "-" . $_estudiante[0]["dni"];?></td>
+			</tr>
+			<tr>
+				<th>Semestre</th>
+				<td><?php echo $semestre = (count($_recordEstudiante) == 0) ? "<font color='red'>No posee ningún semestre culminado</font>" : $_recordEstudiante[count($_recordEstudiante)-1]["semestre"];?></td>
+			</tr>
+		</table>
+		<br>
+		<table class="record">
+            <tr align="center">
+                <td class="subtitulo-tabla">Código</td>
+                <td class="subtitulo-tabla">Asignatura</td>
+                <td class="subtitulo-tabla">Nota</td>                                
+                <td class="subtitulo-tabla">Semestre</td>
+                <td class="subtitulo-tabla">Período</td>
+                <td class="subtitulo-tabla">Tipo</td>
+            </tr>
+<?php 
+    $sum = 0;
+    for ($i=0; $i<count($_recordEstudiante); $i++): 
+            $sum += $_recordEstudiante[$i]["nota"];
+?>
+            <tr align="center">
+                <td><?php echo $_recordEstudiante[$i]["codigo_asignatura"] ?></td>
+                <td><?php echo $_recordEstudiante[$i]["asignatura"]; ?></td>
+                <td><?php echo $_recordEstudiante[$i]["nota"]; ?></td>                               
+                <td><?php echo $_recordEstudiante[$i]["semestre"]; ?></td>
+                <td><?php echo $_recordEstudiante[$i]["periodo_academico"]; ?></td> 
+                <td><?php echo $_recordEstudiante[$i]["tipo"]; ?></td>
+            </tr>
+<?php endfor; ?>
+        </table>
+        <br>
+        <table border="0" cellspacing="10" class="leyenda">
+            <tr>
+                <td>
+                    <b>Índice General:</b> <?php echo  number_format($sum/count($_recordEstudiante), 2);?>
+                </td>
+                <td>
+                    <b>E:</b> Extraordinario
+                </td>
+                <td>
+                    <b>R:</b> Revisión
+                </td>
+                <td>
+                    <b>F:</b> Final
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    
+  
+</page>
+<?php
+     $contenido = ob_get_clean();
+     $salida = "Record_estudiantil_" . $_estudiante[0]["tipo_dni"] . "-" . $_estudiante[0]["dni"] . ".pdf";
+ob_clean();
+    try
+    {
+    $html2pdf = new HTML2PDF('P','Letter','es','true','UTF-8');
+    $html2pdf->setDefaultFont('Arial');
+    $html2pdf->pdf->SetDisplayMode('fullpage');
+    $html2pdf->writeHTML($contenido, isset($_GET['vuehtml']));
+    $html2pdf->Output($salida);
+
+
+    }
+    catch(HTML2PDF_exception $e) {
+        echo $e;
+        exit;
+    }
+

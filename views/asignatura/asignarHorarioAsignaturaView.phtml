@@ -1,0 +1,113 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+if ($_periodo == 0):
+    echo "<script> alert('Disculpe, no existe un Período Académico activo'); history.back(); </script>";
+else:
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+
+?>
+<form class="pure-form pure-form-aligned" method="POST">
+    <input type="hidden" value="<?php echo $_POST["codigo_asignatura"] ;?>" name="codigo_asignatura">
+    <input type="hidden" value="<?php echo $_POST["codigo_asignatura"] ;?>" name="codigo_asignatura">
+    <fieldset>
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="2">
+                        <label>Datos de la Asignatura</label>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="name">Semestre</label>
+                            </td>
+                            <td> 
+                                <input type="text" value="<?php echo $_asignatura[0]["nombre_semestre"]; ?>" name="semestre" readonly>
+                            </td>
+                        </div>
+                    </tr>
+             
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="asignautra">Asignatura</label>
+                            </td> 
+                            <td>
+                                <input id="asignatura" type="text" placeholder="Nombre de la Asignatura" maxlength="50" name="asignatura"  value="<?php echo $_asignatura[0]["nombre_asignatura"]; ?>" readonly>
+                            </td>
+                        </div>
+                    </tr>
+                <tr>
+                    <td align="right">
+                        <label for="vecer_por_semana">Veces que se imparte</label>
+                    </td> 
+                    <td>
+                        <select name="veces_por_semana">
+                            <option value="1" <?php if ($_SESSION["veces_por_semana"] == "1") {echo "selected";}?>>1 vez a la semana</option>
+                            <option value="2" <?php if ($_SESSION["veces_por_semana"] == "2") {echo "selected";}?>>2 veces a la semana</option>
+                            <!--<option value="3" <?php if ($_SESSION["veces_por_semana"] == "3") {echo "selected";}?>>3 veces a la semana</option>-->
+                        </select>
+                    </td>
+                </tr>
+                    <tr>
+                        <td align="right">
+                            <label for="name">Sección</label>
+                        </td>
+                        <td>
+                            <select id="seccion" name="seccion">
+                        <?php for($i=0;$i<count($_seccion);$i++): ?>
+
+                                <option value="<?php echo $_seccion[$i]["codigo"]; ?>" <?php if ($_seccion[$i]["codigo"] == $_SESSION["seccion"]) { echo "selected"; }?>><?php echo $_seccion[$i]["codigo"]; ?></option>
+
+                        <?php endfor; ?>    
+                            </select>
+                        </td>    
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <label for="docente">Docente</label>
+                        </td>
+                        <td>
+                            <select id="docente" name="docente">
+                        <?php for($i=0;$i<count($_docente);$i++): ?>
+
+                                <option value="<?php echo $_docente[$i]["dni"]; ?>" <?php if ($_docente[$i]["dni"] == $_SESSION["docente"]) { echo "selected"; }?>><?php echo $_docente[$i]["docente"]; ?></option>
+
+                        <?php endfor; ?>    
+                            </select>
+                        </td>    
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <label for="cupos">Cupos</label>
+                        </td> 
+                        <td>
+                            <input class="cupos" type="number" placeholder="Cupos" maxlength="50" name="cupos"  value="<?php echo $_SESSION["cupos"]; ?>">
+                        </td>
+                    </tr>
+                <tr align="center">  
+                    <div class="pure-control-group">
+                        <td  colspan="2" align="center">
+                            <input type="reset" class="btn btn-primary" value="Cancelar" onClick="history.back();">
+                            <input type="submit" class="btn btn-primary" value="Continuar" name="enviar">
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>     
+    </fieldset>
+</form>
+<?php endif; ?>

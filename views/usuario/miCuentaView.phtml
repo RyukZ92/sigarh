@@ -1,0 +1,88 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+<!--<div class="formulario" align="center" >-->
+<form class="pure-form pure-form-aligned" method="POST">
+    <fieldset>
+        
+        <table class="pure-table pure-table-bordered" id="formulario">
+            <thead>
+                <tr>
+                    <th colspan="2">Datos del Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>  
+                    <td align="right">
+                        <label for="name">Contraseña Actual</label>
+                    </td>
+                    <td>
+                        <input type="password" placeholder="Contraseña Actual" maxlength="32" name="contrasenia_actual" value="<?php echo $_POST["contrasenia_actual"]; ?>">
+                     
+                    </td>           
+                </tr>  
+                <tr>     
+                    <td align="right">
+                        <label for="password">Nueva Contraseña</label>
+                    </td>
+                    <td>
+                        <input type="password" placeholder="Nueva Contraseña" maxlength="32" name="nueva_contrasenia" value="<?php echo $_POST["nueva_contrasenia"]; ?>">
+                    <span style="color:blue;font-size: 8pt;"> [AZ-az-09]</span>
+                    </td>         
+                </tr>    
+                <tr>         
+                    <td align="right">
+                        <label for="password">Confirmar Nueva Contraseña</label>
+                    <td>
+                        <input type="password" placeholder="Confirmar Nueva Contraseña" maxlength="32" name="nueva_contrasenia2" value="<?php echo $_POST["nueva_contrasenia2"]; ?>">
+                    </td>
+                </tr>
+    
+                <tr> 
+                    <td align="right">
+                        <label for="email">Correo Electrónico</label>
+                    </td> 
+                    <td>
+                        <input autocomplete="off" id="email" type="email" placeholder="Correco Electrónico" maxlength="50" name="email"  value="<?php echo $_usuario[0]["email"]; ?>">
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr>
+                <tr> 
+                    <td align="right">
+                        <label for="pregunta">Pregunta Secreta</label>
+                    </td> 
+                    <td>
+                        <input autocomplete="off" id="email2" type="text" placeholder="Pregunta Secreta" maxlength="40" name="pregunta"  value="<?php echo $_POST["pregunta"]; ?>" >
+                    </td>
+                </tr>
+                <tr> 
+                    <td align="right">
+                        <label for="respuesta">Respuesta Secreta</label>
+                    </td> 
+                    <td>
+                        <input id="respuesta" type="password" placeholder="Respuesta Secreta" maxlength="40" name="respuesta"  value="<?php echo $_POST["respuesta"]; ?>" >
+                    </td>
+                </tr>             
+                <tr>
+                    <td  colspan="2" align="center">
+                        <input type="button" class="btn btn-primary" value="Salir" onClick="window.location='<?php echo URLBASE; ?>inicio'">
+                        <input type="submit" class="btn btn-primary" value="Actualizar" name="actualizar">
+                    </td>                   
+                </tr>
+            </tbody>  
+        </table>
+    </fieldset>
+</form>

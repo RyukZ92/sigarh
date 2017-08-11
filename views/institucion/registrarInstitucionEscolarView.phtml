@@ -1,0 +1,103 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<script>
+$(document).ready(function(){
+   $("#estado").change(function () {
+       $("#estado option:selected").each(function () {
+            id = $(this).val();
+            $.post("public/js/ajax/obtenerCiudadPorEstado.php", { id: id }, function(data){
+                $("#ciudad").html(data);//Destino
+            });            
+        });
+   })
+});
+
+$(document).ready(function(){
+   $("#ciudad").change(function () {
+       $("#ciudad option:selected").each(function () {
+            id = $(this).val();
+            $.post("public/js/ajax/obtenerMunicipioPorCiudad.php", { id: id }, function(data){
+                $("#municipio").html(data);//Destino
+            });            
+        });
+   })
+});
+</script>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+<form class="pure-form pure-form-aligned" method="POST" onSubmit="return validarComboxDireccion();" name="form">
+    <fieldset>
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="2">Datos de la Institución Escolar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <div class="pure-control-group">
+                        <td align="right">
+                            <label for="estado">Estado</label>
+                        </td>
+                        <td>
+                            <select id="estado" name="estado">
+                                <option value="0">Seleccione</option>
+                        <?php for($i=0;$i<count($_estado);$i++): ?>
+                            
+                                <option value="<?php echo $_estado[$i]["id"]; ?>" <?php if ($_estado[$i]["id"] == $_POST["semestre"]) { echo "selected"; }?>><?php echo $_estado[$i]["estado"]; ?></option>
+                        
+                        <?php endfor; ?>    
+                            </select>                           
+                        </td>
+                    </div>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="ciudad">Ciudad</label>
+                    </td> 
+                    <td>
+                        <select id="ciudad" name="ciudad">
+                            <option value="0">Seleccione</option>
+                        </select>    
+                    </td>
+                </tr>     
+               <!-- <tr>
+                    <td align="right">
+                        <label for="municipio">Municipio</label>
+                    </td> 
+                    <td>
+                        <select id="municipio" name="municipio">
+                            <option value="0">Seleccione</option>
+                        </select>    
+                    </td>
+                </tr>  -->             
+                <tr>
+                    <td align="right">
+                        <label for="institucion">Institución</label>
+                    </td> 
+                    <td>
+                        <input type="text" name="institucion" placeholder="Nombre de la Institución Escolar" maxlength="100" value="<?php echo $_POST["institucion"]; ?>">  
+                    </td>
+                </tr> 
+                <tr align="center"> 
+                    <td  colspan="2" align="center">
+                        <input type="button" class="btn btn-primary" value="Salir" onClick="window.location='<?php echo URLBASE; ?>inicio'">
+                        <input type="submit" class="btn btn-primary" value="Registrar" name="registrar">
+                    </td>        
+                </tr>
+            </tbody>
+        </table>    
+    </fieldset>
+</form>

@@ -1,0 +1,177 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+    <!--<div class="formulario" align="center">-->
+    <form class="pure-form pure-form-aligned" method="POST">
+        <input type="hidden" value="<?php echo $_POST["codigo_asignatura"] ;?>" name="codigo_asignatura">
+        <input type="hidden" value="<?php echo $_POST["pagina_referencia"] ;?>" name="pagina_referencia">
+        <fieldset>
+            <table class="pure-table pure-table-bordered" id="formulario">  
+                <thead>
+                    <tr>
+                        <th style="text-align: center;" colspan="2">
+                            <label>Datos de la Asignatura</label>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="name">Semestre</label>
+                            </td>
+                            <td> 
+                                <input type="text" value="<?php echo $_SESSION["semestre"]; ?>" name="semestre" readonly>
+                            </td>
+                        </div>
+                    </tr>
+             
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="email">Nombre de la Asignatura</label>
+                            </td> 
+                            <td>
+                                <input id="asignatura" type="text" maxlength="50" name="asignatura"  value="<?php echo $_SESSION["asignatura"]; ?>" readonly>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="email">Sección</label>
+                            </td> 
+                            <td>
+                                <input id="seccion" type="text"  maxlength="50" name="seccion"  value="<?php echo $_SESSION["seccion"]; ?>" readonly>
+                            </td>
+                        </div>
+                    </tr> 
+            <?php if ($totalHorario < $_SESSION["veces_por_semana"]): ?>
+                    <tr>
+                        <td align="right">
+                            <label for="email">Día</label>
+                        </td> 
+                        <td>
+                            <select name="dia">
+                            <?php if(!in_array("1", $_SESSION["dia"])):  ?>
+                                <option value="1" <?php if ($_POST["dia"] == "1") {echo "selected";}?>>Lunes</option>
+                            <?php endif; 
+                                  if(!in_array("2", $_SESSION["dia"])): 
+                            ?>
+                                <option value="2" <?php if ($_POST["dia"] == "2") {echo "selected";}?>>Martes</option>
+                            <?php endif; 
+                                  if(!in_array("3", $_SESSION["dia"])): 
+                            ?>                              
+                                <option value="3" <?php if ($_POST["dia"] == "3") {echo "selected";}?>>Miércoles</option>
+                            <?php endif; 
+                                  if(!in_array("4", $_SESSION["dia"])): 
+                            ?>                             
+                                <option value="4" <?php if ($_POST["dia"] == "4") {echo "selected";}?>>Jueves</option>
+                            <?php endif; 
+                                  if(!in_array("5", $_SESSION["dia"])): 
+                            ?>                        
+                                <option value="5" <?php if ($_POST["dia"] == "5") {echo "selected";}?>>Viernes</option>
+                            <?php endif; 
+							?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <label for="aula">Aula de Clases</label>
+                        </td> 
+                        <td>
+                            <input id="aula" type="text" placeholder="Aula de Clases" maxlength="50" name="aula"  value="<?php echo $_POST["aula"]; ?>">
+                        </td>
+                    </tr>  
+                    <tr>
+                        <td align="right">
+                            <label for="hora_inicio">Hora de Inicio</label>
+                        </td> 
+                        <td>
+                            <input class="hora" type="text" placeholder="Hora de Inicio" maxlength="50" name="hora_inicio"  value="<?php echo $_POST["hora_inicio"]; ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <label for="hora_salida">Hora de Salida</label>
+                        </td> 
+                        <td>
+                            <input class="hora" type="text" placeholder="Hota de Salida" maxlength="50" name="hora_salida"  value="<?php echo $_POST["hora_salida"]; ?>">
+                        </td>
+                    </tr>
+          
+                    <tr align="center">  
+                        <div class="pure-control-group">
+                            <td  colspan="2" align="center">
+                                <input type="button" class="btn btn-success" value="Volver" onClick="history.back();"> 
+
+                                <input type="submit" class="btn btn-success" value="Pre-Asignar" name="pre_asignar">
+                            </td>
+                        </div>
+                    </tr>
+            <?php endif; ?>
+                </tbody>
+            </table>    
+        </fieldset>
+    
+
+    
+<?php if($totalHorario > 0): ?>
+    <table class="pure-table pure-table-horizontal">
+        <thead>
+            <tr>
+                <th>Sección</th>
+                <th>Día</th>
+                <th>Hora</th>
+                <th>Aula</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead> 
+        <tbody>
+<?php   for ($i=0;$i<count($_SESSION["dia"]); $i++):
+            if ($_SESSION["dia"][$i] != null):
+                $hora_inicio = AsistenteBasico::convertirHoraA12H($_SESSION["hora_inicio"][$i]);
+                $hora_salida = AsistenteBasico::convertirHoraA12H($_SESSION["hora_salida"][$i]);
+?>        
+               <tr>
+                    <td rowspan="1"><?php echo $_SESSION["seccion"]; ?></td>
+        
+                    <td><?php echo AsistenteBasico::obtenerDiaDeLaSemana($_SESSION["dia"][$i]); ?></td>
+                    <td><?php echo $hora_inicio . " - " . $hora_salida; ?></td>
+                    
+                    <td><?php echo $_SESSION["aula"][$i]; ?></td>
+ 
+                    <td rowspan="1" title='Eliminar' align=center> 
+                        <a href="<?php echo URLBASE.$_GET["vista"] . "/eliminar/".$i; ?>">
+                            <img src='<?php echo URLBASE; ?>public/img/remove.png'/>
+                        </a>
+                    </td>   
+               </tr>
+<?php      
+            endif;
+        endfor;
+
+            if ($totalHorario == $_SESSION["veces_por_semana"]): ?>  
+                <tr align="center">  
+                    <td  colspan="7" align="center">
+                        <input type="submit" class="btn btn-primary" value="Asignar Horas" name="asignar_horas">
+                    </td>
+                </tr>
+<?php       endif; ?>
+        </tbody>
+    </table>
+</form>
+<?php endif; ?>

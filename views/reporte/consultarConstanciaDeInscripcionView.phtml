@@ -1,0 +1,101 @@
+<?php
+ob_start();
+?>
+<style type="text/css">
+
+    *{       
+        font-size: 12pt;
+        line-height: 1.5;
+    }
+    .banner{
+        width: auto;
+        margin: auto;
+        text-align: center;
+        margin-top: 30px;
+        padding: 0; 
+        
+    }
+    .banner img {
+        width: 750px;
+        height: 70px;
+    }
+    #cuerpo {
+        margin: auto;
+        width: 100%;
+        height:auto;
+        border:0px;
+        
+    }
+    #tema {
+        margin: auto;
+        margin-top: 80px;
+        text-align:center;
+        font-weight: bold;
+    }
+    #contenido {        
+        margin: auto;
+        margin-top:40px;
+        vertical-align: middle; 
+        text-align: justify;
+        padding:5%;
+        border:0px;
+        width:100%;
+    }
+    #contenido p {
+        text-align: justify;
+    }
+    span {
+        font-weight: none;
+    }
+  </style>
+
+<page backtop='30mm' backbottom='20mm' backleft='20mm' backright='20mm'>
+    <page_header>
+        <div class="banner" ><img src="<?php echo URLBASE; ?>/public/img/<?php echo $_institucion["img_reporte"]; ?>" /></div>
+    </page_header>
+    <page_footer>
+        <div>Página [[page_cu]]/[[page_nb]]</div>
+        <div>Emito por <?php echo $usuario;  ?> a las <?php echo date('h:i:s A'); ?></div> 
+    </page_footer>
+    <div id="cuerpo">
+        <div id="tema"><?php echo $tema; ?></div>
+        <div id="contenido">
+            Quien Suscribe, Licenciado <u><?php echo $director; ?></u>, titular del Documento de Identidad N°: <u><?php echo $dniDirector; ?></u>, 
+            Director (E) del <u><?php echo $institucion; ?></u>, Código D.E.A.: <u><?php echo $codigoInstitucion; ?></u>, 
+            que funciona en <?php echo $ciudad; ?>, parroquita <?php echo $parroquia; ?>, municipio <?php echo $municipio; ?> del Estado <?php echo $estado; ?>, hace constar que el ciudadano 
+            <u><?php echo $estudiante; ?></u>, titular del Documento de Identidad N°: <u><?php echo $dniEstudiante; ?></u>, cursa sus estudios en esta institución 
+            del <u><?php echo $semestre; ?></u> de Educación <u><?php echo $tipoEducacion; ?></u>.
+            <br>
+            <br>
+            Constancia que se expide a petición de parte interesada en Carúpano a los 07 días del mes de Julio de 2015.
+        </div>
+    </div>
+ <?php 
+for ($i=0; $i<count($_estudiante); $i++) {
+    echo $cont[$i] . "<br>";
+}
+$mayor = max($cont);
+echo "<br>Valor más grande: $mayor <br>Posicion: " . $semestre[7];
+
+ ?>   
+</page>
+<?php
+     $contenido = ob_get_clean();
+     $direccion = "files/downloads/";
+     $carpeta = "Estudio/";
+ob_clean();
+    try
+    {
+    $html2pdf = new HTML2PDF('P','letter','es','true','UTF-8');
+    $html2pdf->setDefaultFont('Arial');
+    $html2pdf->pdf->SetDisplayMode('fullpage');
+    $html2pdf->writeHTML($contenido, isset($_GET['vuehtml']));
+    $html2pdf->Output($salida);
+
+
+    }
+    catch(HTML2PDF_exception $e) {
+        echo $e;
+        exit;
+    }
+

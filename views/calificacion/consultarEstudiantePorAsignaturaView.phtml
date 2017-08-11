@@ -1,0 +1,54 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+$cantidadNotas = 5;
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<table class="pure-table pure-table-striped" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Documento</th>
+            <th>Nombre y Apellido</th>
+<?php for ($i=1; $i<=$cantidadNotas; $i++): ?>  
+            <th>Nota <?php echo $i; ?></th>
+<?php endfor; ?>    
+            <th>Nota Final</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+for ($i=0; $i<COUNT($_estudiante); $i++):
+    $_horarioAsignatura = $objCrudGenerica->consultar("horario_asignatura", array("codigo_asignatura"), "id = '" . $_SESSION["asignatura"] . "'", null);
+    $tabla = "calificacion c JOIN inscripcion i ON (c.id_inscripcion = i.id)";
+    $datos = array("c.id", "nota1", "nota2", "nota3", "nota4", "nota5");
+    $condicion = "periodo_academico = '" . $_SESSION["periodo"] . "' AND c.codigo_asignatura = '" . $_horarioAsignatura[0]["codigo_asignatura"] . "' AND i.dni_estudiante = '" . $_estudiante[$i]["dni"] . "'";
+    $orden = null;
+    $_calificacion = $objCrudGenerica->consultar($tabla, $datos, $condicion, $orden);
+    $_SESSION["id_calificacion"][$i] = $_calificacion[0]["id"];
+    $_nota = $objCrudGenerica->consultar("nota", null, "id_calificacion = '" . $_SESSION["id_calificacion"][$i] . "'", "id ASC");
+    $_promedio = $objCrudGenerica->consultar("nota", array("round(AVG(nota)) AS promedio"), "id_calificacion = '" . $_SESSION["id_calificacion"][$i] . "' AND nota > 0", null);
+  
+    echo "<tr>
+            <td>" . $_estudiante[$i]["tipo_dni"] . "-" .$_estudiante[$i]["dni"] . "</td>
+            <td>" . $_estudiante[$i]["nombre"] . " " . $_estudiante[$i]["apellido"] . "</td>";
+        for ($j=0; $j<$cantidadNotas; $j++):
+            $nota = ($_nota[$j]["nota"] > 0) ? $_nota[$j]["nota"] : 0 ;
+            echo "<td>$nota</td>";
+         endfor;
+         
+    echo "<td>" . $_promedio[0]["promedio"] . " pts.</td>
+    </tr>";
+
+endfor;
+        ?>
+    <tr>
+        <td colspan="8" align="right">  <a href="<?php echo URLBASE; ?>actualizar-notas-estudiante">Actualizar Notas</a></td>
+    </tr>
+    </tbody>
+</table>

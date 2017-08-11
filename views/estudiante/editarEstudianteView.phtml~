@@ -1,0 +1,142 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+<form class="pure-form pure-form-aligned" method="POST" > 
+    <input type="hidden" value="<?php echo $_estudiante[0]["dni"]; ?>" name="dni_estudiante">
+    <input type="hidden" value="<?php echo $_POST["pagina_referencia"] ;?>" name="pagina_referencia">
+        <table class="pure-table pure-table-bordered" id="formulario">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        <label>Datos del Estudiante</label>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="right">
+                        <label  for="state">Tipo de Documento</label>
+                    </td>                      
+                    <td>
+                        <select id="tipo_dni" name="tipo_dni">
+                            <option value="V" <?php if ($_estudiante[0]["tipo_dni"] == "V") { echo "selected"; }?>>V</option>
+                            <option value="E" <?php if ($_estudiante[0]["tipo_dni"] == "E") { echo "selected"; }?>>E</option>
+                        </select>
+                        <span class='campo-obligatorio'>*</span>
+                    </td>   
+                </tr>  
+                <tr>
+                    <td align="right">
+                        <label for="dni">Documento de Identidad</label>
+                    </td>                      
+                    <td>
+                        <input id="dni" type="text" placeholder="Documento de Identidad" maxlength="8" name="dni" value="<?php echo $_estudiante[0]["dni"]; ?>" class="solo-numero-entero">
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="password">Nombres</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Nombres" maxlength="40" name="nombre" value="<?php echo $_estudiante[0]["nombre"]; ?>" class="solo-letras-con-espacio-y-acentos">
+                        <span class='campo-obligatorio'>*</span>
+                    </td>    
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="apellido">Apellidos</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Apellidos" maxlength="40" name="apellido" value="<?php echo $_estudiante[0]["apellido"]; ?>" class="solo-letras-con-espacio-y-acentos">
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label  for="sexo">Sexo</label>
+                    </td>                      
+                    <td>
+                        <select id="sexo" name="sexo">
+                            <option value="Femenino" <?php if ($_estudiante[0]["sexo"] == "Femenino") { echo "selected"; }?>>Femenino</option>
+                            <option value="Masculino" <?php if ($_estudiante[0]["sexo"] == "Masculino") { echo "selected"; }?>>Masculino</option>
+                        </select>
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr>     
+                <tr>
+                    <td align="right">
+                        <label for="fecha_natal">Fecha de Nacimiento</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="dd/mm/aaaa" name="fecha_natal" maxlength="10" value="<?php echo AsistenteBasico::convertirFechaDdMmAaaa($_estudiante[0]["fecha_natal"]); ?>" class="fecha" >
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="telefono">Teléfono de Contacto</label>
+                    </td>                      
+                    <td>
+                        <input type="text" id="telefono" placeholder="0294-321987465" name="telefono" maxlength="12" value="<?php echo $_estudiante[0]["telefono"]; ?>" class="solo-numero-entero">
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="lugar_nacimiento">Lugar de Nacimiento</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Lugar de Nacimiento" name="lugar_nacimiento" maxlength="50" value="<?php echo $_estudiante[0]["lugar_nacimiento"]; ?>" class="solo-letras-con-espacio-y-acentos">
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr> 
+                <tr>
+                    <td align="right">
+                        <label for="email">Estado</label>
+                    </td>                      
+                    <td>
+                        <select name="estado">
+                            <option value="0">Seleccione</option>
+                <?php for ($i=0; $i<count($_estado); $i++): ?>
+                            <option value="<?php echo $_estado[$i]["id"]; ?>" <?php if ($_estudiante[0]["estado"] == $_estado[$i]["id"]) { echo "selected"; }?>>
+                                <?php echo $_estado[$i]["estado"]; ?>
+                            </option>
+		<?php endfor; ?>
+                        </select>
+                
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="direccion">Dirección de Habitación</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Dirección de Habitación" name="direccion" maxlength="50" value="<?php echo $_estudiante[0]["direccion"]; ?>" class="alfanumerico-sin-espacio">
+                        <span class='campo-obligatorio'>*</span>
+                    </td>
+                </tr>        
+                <tr>
+                    <td align="center" colspan="2">
+                        <input type="button" class="btn btn-primary" value="Cancelar" name="Salir" onClick="history.back();">
+                        <input type="submit" class="btn btn-primary" value="Guardar" name="editar">
+                    </td> 
+                </tr>
+            </tbody>    
+        </table>    
+
+</form>

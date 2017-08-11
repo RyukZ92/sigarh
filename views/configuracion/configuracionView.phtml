@@ -1,0 +1,224 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<script>
+$(document).ready(function(){
+    $(document).mouseenter(function () {        
+        $(".sub-cuerpo").css({'height':$(".vista").height()+20});        
+      });
+    $(document).mousemove(function () {        
+        $(".sub-cuerpo").css({'height':$(".vista").height()+20});        
+      });
+    $("select").keyup(function () {        
+        $(".sub-cuerpo").css({'height':$(".vista").height()+20});        
+      }) 
+});
+</script>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+<form class="pure-form pure-form-aligned" method="POST" enctype="multipart/form-data"> 
+    <fieldset>
+        <table class="pure-table pure-table-bordered" style="width: 98%;">
+            <thead>
+                <tr>
+                    <th colspan="4" >
+                        <label>Datos del La Institución Escolar</label>
+                    </th>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr>
+                    <td align="right">
+                        <label for="dni">Código DEA</label>
+                    </td>                      
+                    <td>
+                        <input id="dni" type="text" placeholder="Código DEA" maxlength="20" name="codigo_dea" value="<?php echo $institucion['codigo_dea']; ?>" autocomplete="off" class="solo-albabeto-espaniol-sin-espacio">
+                        
+                    </td>
+          
+                    <td align="right">
+                        <label for="password">Nombre</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Nombre de la Institución" maxlength="100" name="institucion" value="<?php echo $institucion["institucion"]; ?>" autocomplete="off" class="solo-letras-con-espacio-y-acentos">
+                        
+                    </td>    
+                </tr>
+
+                <tr>
+                    <td align="right">
+                        <label for="password">Teléfono</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Telefono" id="telefono" maxlength="12" name="telefono" value="<?php echo $institucion["telefono"]; ?>" autocomplete="off" class="solo-numero-entero">
+                        
+                    </td>
+
+                    <td align="right">
+                        <label  for="state">Estado</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Estado" maxlength="52" name="estado" value="<?php echo $institucion["estado"]; ?>" autocomplete="off" class="solo-letras-con-espacio-y-acentos">
+                        
+                    </td>
+                </tr>     
+                <tr>
+                    <td align="right">
+                        <label for="email">Municipio</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Municipio" name="municipio" maxlength="50" value="<?php echo $institucion["municipio"]; ?>" autocomplete="off" class="solo-letras-con-espacio-y-acentos">
+                        
+                </td>
+       
+                    <td align="right">
+                        <label for="email">Ciudad</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Ciudad" name="ciudad" maxlength="50" value="<?php echo $institucion["ciudad"]; ?>" autocomplete="off" class="solo-letras-con-espacio-y-acentos">
+                        
+                    </td>
+                </tr>  
+                <tr>
+                    <td align="right">
+                        <label for="email">Parroquia</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Parroquia" name="parroquia" maxlength="50" value="<?php echo $institucion["parroquia"]; ?>" autocomplete="off" class="solo-letras-con-espacio-y-acentos">
+                        
+                    </td>
+    
+                    <td align="right">
+                        <label for="email">Ubicación</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Ubicación" name="ubicacion" maxlength="50" value="<?php echo $institucion["ubicacion"]; ?>" autocomplete="off" class="solo-letras-con-espacio-y-acentos">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="email">Zona Educativa</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Zona Educativa" name="zona_educativa" maxlength="30" value="<?php echo $institucion["zona_educativa"]; ?>" autocomplete="off" >
+                        
+                    </td>
+       
+                    <td align="right">
+                        <label for="email">E-mail</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="E-mail" name="email" maxlength="60" value="<?php echo $institucion["email"]; ?>" autocomplete="off">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td  align="right" colspan="2"><label>Cintillo de Constancias</label></td>
+                    <td colspan="2"><input type="file" name="img_reporte"></td>
+                    
+                </tr>
+                <tr>
+                    <td  align="right" colspan="2"><label>Cintillo de la Certificación de Notas</label></td>
+                    <td colspan="2"><input type="file" name="img_certificacion"></td>
+                    
+                </tr>
+                <tr>
+                    <th colspan="4" style="background: #e0e0e0;">
+                        <label>Datos del Director</label>
+                    </th>
+                </tr>  
+                <tr>
+                    <td align="right">
+                        <label for="email">Tipo de Documento</label>
+                    </td>                      
+                    <td>
+                        <select id="state" name="tipo_dni">
+                            <option value="V" <?php if ($institucion["tipo_dni"] == "V") { echo "selected"; }?>>V</option>
+                            <option value="E" <?php if ($institucion["tipo_dni"] == "E") { echo "selected"; }?>>E</option>
+                        </select>
+                        
+                    </td>
+       
+                    <td align="right">
+                        <label for="email">Ducumento</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Documento del Director" name="dni_director" maxlength="8" value="<?php echo $institucion["dni_director"]; ?>" autocomplete="off" class="solo-numero-entero">
+                        
+                    </td>
+                </tr>
+              
+                <tr>
+                    <td align="right">
+                        <label for="email">Nombres</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Nombres del Director" name="nombre" maxlength="30" value="<?php echo $institucion["nombre_director"]; ?>" autocomplete="off" class="solo-letras-con-espacio-y-acentos">
+                        
+                    </td>
+       
+                    <td align="right">
+                        <label for="email">Apellidos</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Apellidos del Director" name="apellido" maxlength="20" value="<?php echo $institucion["apellido_director"]; ?>" autocomplete="off" class="solo-letras-con-espacio-y-acentos">
+                        
+                    </td>
+                </tr>
+                <tr>
+
+                    <td align="right">
+                        <label for="email">Sexo</label>
+                    </td>                      
+                    <td>
+                        <select id="sexo" name="sexo">
+                            <option value="M" <?php if ($institucion["sexo_director"] == "M") { echo "selected"; }?>>Masculino</option>
+                            <option value="F" <?php if ($institucion["sexo_director"] == "F") { echo "selected"; }?>>Fenemino</option>                            
+                        </select>
+                        
+                    </td>
+                    <td align="right">
+                        <label for="email">Teléfono</label>
+                    </td>                      
+                    <td>
+                        <input type="text" placeholder="Teléfono del Director" id="telefono_director" name="telefono_director" maxlength="12" value="<?php echo $institucion["telefono_director"]; ?>" autocomplete="off" class="solo-numero-entero">
+                        
+                    </td>
+  
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="email">Especialidad</label>
+                    </td>                      
+                    <td colspan="3">
+                        <select id="state" name="tipo_especialidad">
+                            <option value="TSU" <?php if ($institucion["tipo_especialidad"] == "TSU") { echo "selected"; }?>>TSU</option>
+                            <option value="Ingenier" <?php if ($institucion["tipo_especialidad"] == "Ingenier") { echo "selected"; }?>>Ingeniería</option>
+                            <option value="Licenciad" <?php if ($institucion["tipo_especialidad"] == "Licenciad") { echo "selected"; }?>>Licenciatura</option>
+                        </select>
+                        
+                    </td>
+                </tr>                
+                <tr>
+                    <td colspan="4" align="center">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                        <input type="button" class="btn btn-primary" value="Cancelar" onClick="window.location='<?php echo URLBASE; ?>inicio'">
+                        <input type="submit" class="btn btn-primary" value="Actualizar" name="actualizar">
+                    </td> 
+                </tr>
+            </tbody>    
+        </table>    
+    </fieldset>
+</form>

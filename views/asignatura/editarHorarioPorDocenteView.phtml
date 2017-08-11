@@ -1,0 +1,129 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+if ($_periodo == 0):
+    echo "<script> alert('Disculpe, no existe un Período Académico activo'); history.back(); </script>";
+else:
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+<form class="pure-form pure-form-aligned" method="POST">
+    <input type="hidden" value="<?php echo $_POST["id_horario"] ;?>" name="id_horario">
+    
+    <fieldset>
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="2">
+                        <label>Datos del Horario</label>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="name">Semestre</label>
+                            </td>
+                            <td> 
+                                <input type="text" value="<?php echo $_horario[0]["semestre"]; ?>" name="semestre" readonly>
+                            </td>
+                        </div>
+                    </tr>
+             
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="asignatura">Asignatura</label>
+                            </td> 
+                            <td>                               
+								<select name="asignatura">
+						<?php for ($i=0; $i<count($_asignatura); $i++): ?>
+									<option value="<?php echo $_asignatura[$i]["codigo"]; ?>" <?php if ($_horario[0]["codigo_asignatura"] == $_asignatura[$i]["codigo"]) {echo "selected";} ?>><?php echo $_asignatura[$i]["nombre"]; ?></option>
+						<?php endfor; ?>
+								</select>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <label for="name">Sección</label>
+                        </td>
+                        <td>
+                            <select id="seccion" name="seccion">
+                        <?php for($i=0;$i<count($_seccion);$i++): ?>
+
+                                <option value="<?php echo $_seccion[$i]["codigo"]; ?>" <?php if ($_seccion[$i]["codigo"] == $_horario[0]["seccion"]) { echo "selected"; }?>><?php echo $_seccion[$i]["codigo"]; ?></option>
+
+                        <?php endfor; ?>    
+                            </select>
+                        </td>    
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <label for="docente">Docente</label>
+                        </td>
+                        <td>
+                            <select id="docente" name="docente">
+                        <?php for($i=0;$i<count($_docente);$i++): ?>
+                                <option value="<?php echo $_docente[$i]["dni"]; ?>" <?php if ($_docente[$i]["dni"] == $_horario[0]["docente"]) { echo "selected"; }?>><?php echo $_docente[$i]["docente"]; ?></option>
+                        <?php endfor; ?>    
+                            </select>
+                        </td>    
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <label for="cupos">Cupos</label>
+                        </td> 
+                        <td>
+                            <input class="cupos" type="number" placeholder="Cupos" maxlength="50" name="cupos"  value="<?php echo $_horario[0]["cupos"]; ?>" class="solo-numero-entero">
+                        </td>
+                    </tr>
+        <?php for ($i=0;$i<count($_horario); $i++): ?>
+                    <tr>
+                        <td colspan="2" align="center"><label>Bloque N° <?php echo $i+1; ?></label></td>
+                    </tr>                    
+                    <tr>
+                        <td align="right"><label>Día</label></td>
+                                                <td>
+                            <select name="dia[]">                            
+                                <option value="1" <?php if ($_horario[0]["dia"] == "1") {echo "selected";}?>>Lunes</option>
+                                <option value="2" <?php if ($_horario[0]["dia"] == "2") {echo "selected";}?>>Martes</option>
+                                <option value="3" <?php if ($_horario[0]["dia"] == "3") {echo "selected";}?>>Miércoles</option>
+                                <option value="4" <?php if ($_horario[0]["dia"] == "4") {echo "selected";}?>>Jueves</option>
+                                <option value="5" <?php if ($_horario[0]["dia"] == "5") {echo "selected";}?>>Viernes</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right"><label>Hora de Inicio</label></td>
+                        <td><input class="hora" type="text" name="hora_inicio[]" placeholder="Hora de Inicio" value="<?php echo AsistenteBasico::convertirHoraA12H($_horario[$i]["hora_inicio"]); ?>"></td>                        
+                    </tr>
+                    <tr>
+                        <td align="right"><label>Hora de Salida</label></td>
+                        <td><input class="hora" type="text" name="hora_salida[]" placeholder="Hora de Salida" value="<?php echo AsistenteBasico::convertirHoraA12H($_horario[$i]["hora_salida"]); ?>"></td>
+                    </tr>
+                    <tr>
+                        <td align="right"><label>Aula</label></td>
+                        <td><input type="text" name="aula[]" placeholder="Aula de Clases" value="<?php echo $_horario[$i]["aula"]; ?>"></td>
+                    </tr>					
+        <?php endfor; ?>
+                    <tr align="center">
+                        <td  colspan="2" align="center">
+                            <input type="button" class="btn btn-primary" value="Cancelar" name="Salir" onClick="history.back();">
+                            <input type="submit" class="btn btn-primary" value="Guardar" name="editar">
+                        </td>
+                    </tr>
+            </tbody>
+        </table>     
+    </fieldset>
+</form>
+<?php endif; ?>

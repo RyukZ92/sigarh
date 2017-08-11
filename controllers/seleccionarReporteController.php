@@ -1,0 +1,47 @@
+<?php
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+require "librarys/crudGenerica/crudGenerica.php";
+require "librarys/AsistenteBasico/AsistenteBasico.php";
+$objCrudGenerica = new CrudGenerica();
+if (isset($_SESSION["dni_estudiante"])) {
+//	unset($_SESSION["dni_estudiante"], $_SESSION["tipo_constancia"]);
+}
+$tabla = "semestre";
+$datos = null;
+$condicion = null;
+$orden = "anio_escolar ASC, id ASC";
+$_semestre = $objCrudGenerica->consultar($tabla, $datos, $condicion, $orden);
+
+$_periodoAcademico = $objCrudGenerica->consultar("periodo_academico", null, "estatus = '1'", null);
+if ($_POST['enviar']) {
+    
+    if (AsistenteBasico::validarCamposVacios(array($_POST["dni"], $_POST["tipo_constancia"]))) {
+       $notificacion = $alerta["campos_vacios"];
+    } elseif(($objCrudGenerica->contarFilas("estudiante", "dni = '" . $_POST["dni"] . "'") == 0)) {
+            $notificacion = $alerta["registro_no_existe"];
+    } else {
+        $_SESSION["dni_estudiante"] = $_POST["dni"];
+        $_SESSION["tipo_constancia"] = $_POST["tipo_constancia"];
+        
+        if ($_POST["tipo_constancia"] == "estudio") {
+            $_SESSION["url_constancia"] = URLBASE . "consultar-constancia-de-estudio";
+        } else if ($_POST["tipo_constancia"] == "notas") { 
+            $notas = true;
+            $_SESSION["url_constancia"] = URLBASE . "seleccionar-certificacion-de-notas";
+        } else if ($_POST["tipo_constancia"] == "horario") { 
+            $_SESSION["url_constancia"] = URLBASE . "horario-de-clases-estudiantil";
+        } else if ($_POST["tipo_constancia"] == "record") { 
+            $_SESSION["url_constancia"] = URLBASE . "record-estudiantil";
+        }
+        if ($notas == null) {
+        		header("location:" . URLBASE . "confirmacion-del-reporte");
+        } else {
+        		header("location:" . URLBASE . "seleccionar-certificacion-de-notas");
+        }
+    }
+}
+require "views/reporte/seleccionarReporteView.phtml";

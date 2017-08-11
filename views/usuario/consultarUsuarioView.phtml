@@ -1,0 +1,104 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<table class="pure-table pure-table-horizontal" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Correo Electrónico</th>
+            <th>Tipo de Usuario</th>
+            <th>Registro</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+	for ($i=0; $i<COUNT($_usuario); $i++):
+        echo "<tr>
+                <td>" . $_usuario[$i]["usuario"] . "</td>
+                <td>" . $_usuario[$i]["email"] . "</td>
+                <td>" . $_usuario[$i]["tipo_usuario"] . "</td>
+                <td align=center>" . AsistenteBasico::convertirFechaDdMmAaaa($_usuario[$i]["fecha_creacion"]) . "</td>
+                <td title='Editar' align=center>
+                    <form method='POST' action='" . URLBASE . "editar-usuario'>
+                        <input type='hidden' name='usuario' value='" . $_usuario[$i]["usuario"] ."'>
+                        <input type='image'src='" . URLBASE . "public/img/pencil.png'/>
+                    </form></td>
+                <td title='Eliminar' align=center>
+                    <form method='POST' action='" . URLBASE . "eliminar-usuario'>
+                        <input type='hidden' name='usuario' value='" . $_usuario[$i]["usuario"] ."'>
+                        <input type='image' src='" . URLBASE . "public/img/remove.png'/>
+                    </form>
+                </td>  
+            </tr>";
+	endfor; ?>
+    </tbody>
+</table>
+<div class='paginador' align='center' >
+        <ul>
+            <li>
+            <?php if($params['primero']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['primero']; ?>">
+                <input type="button" value="Primera" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                    <input type="button" value="Primera" disabled class="btn-disabled" />
+            <?php	endif; ?>
+
+            </li>
+            <li>
+            <?php if($params['anterior']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['anterior']; ?>">
+                <input type="button" value="&larr; Anterior"  class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="&larr; Anterior" disabled class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['siguiente']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['siguiente']; ?>">
+                <input type="button" value="Siguiente &rarr;" class="btn-enabled" />
+                </a>	
+            <?php	else: ?>
+                <input type="button" value="Siguiente &rarr;" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['ultimo']):	?>
+                <a  class='parametro'  class='parametro' href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['ultimo']; ?>">
+                <input type="button" value="Última" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="Última" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+        </ul>
+    </div>
+
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono-papelera'>
+            <a href='<?php echo URLBASE; ?>papelera-usuario' title='Papelera'>
+                <div id='imagen-papelera'></div>
+                <div id='nombre-icono'>Papelera</div>
+            </a>
+        </div>
+<!--<?php if ($pagina < 2): ?>        
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="history.back();" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+<?php endif; ?>-->        
+    </div>

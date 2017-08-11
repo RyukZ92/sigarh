@@ -1,0 +1,76 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+
+?>
+<!--<div class="formulario" align="center">-->
+<form class="pure-form pure-form-aligned" method="POST">
+    <fieldset>
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="2">Datos de la Asignatura</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <div class="pure-control-group">
+                        <td align="right">
+                            <label for="name">Semestre</label>
+                        </td>
+                        <td>
+                            <select id="state" name="semestre">
+                                <option value="0">Seleccione</option>
+                        <?php for($i=0;$i<count($_semestre);$i++): ?>
+                            
+                                <option value="<?php echo $_semestre[$i]["id"]; ?>" <?php if ($_semestre[$i]["id"] == $_POST["semestre"]) { echo "selected"; }?>><?php echo $_semestre[$i]["nombre"]; ?></option>
+                        
+                        <?php endfor; ?>    
+                            </select>                           
+                        </td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="pure-control-group">
+                        <td align="right">
+                            <label for="email">Código de la Asignatura</label>
+                        </td> 
+                        <td>
+                            <input id="codigo" type="text" placeholder="Código de la Asignatura" maxlength="50" name="codigo"  value="<?php echo $_POST["codigo"]; ?>" class="alfanumerico-sin-espacio">
+                        </td>
+                    </div>
+                </tr>               
+                <tr>
+                    <div class="pure-control-group">
+                        <td align="right">
+                            <label for="email">Nombre de la Asignatura</label>
+                        </td> 
+                        <td>
+                            <input id="asignatura" type="text" placeholder="Nombre de la Asignatura" maxlength="30" name="asignatura"  value="<?php echo $_POST["asignatura"]; ?>" class="solo-letras-con-espacio-y-acentos">
+                        </td>
+                    </div>
+                </tr>
+                <tr align="center">  
+                    <div class="pure-control-group">
+                        <td  colspan="2" align="center">
+                            <input type="button" class="btn btn-primary" value="Salir" onClick="window.location='<?php echo URLBASE; ?>inicio'">
+                            <input type="submit" class="btn btn-primary" value="Registrar" name="registrar">
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>    
+    </fieldset>
+</form>

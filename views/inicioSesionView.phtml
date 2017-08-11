@@ -1,0 +1,28 @@
+
+<div class="inicio-sesion">
+<?php 
+if ($notificacion) {
+	echo $notificacion;
+}
+?>
+    <form class="pure-form pure-form-stacked" method="POST">
+    <fieldset >
+        <div align="center">
+            <legend>Inicio de Sesión</legend>
+        </div>
+            <div align="center">
+                <label for="text">Usuario</label>
+                <input id="username" type="text" placeholder="Usuario" name="usuario" autocomplete="off">
+            </div>
+        <div align="center">
+            <label for="password">Contraseña</label>
+            <input id="password" type="password" placeholder="Contraseña" name="contrasenia">
+        </div>
+        <br clear="all">
+        <div align="center">
+            <input type="submit" class="btn btn-primary" value="Entrar" name="entrar">
+        </div>
+    </fieldset>
+    </form>    
+</div>
+<div id="recuperar-contrasenia"><a href="<?php echo URLBASE; ?>recuperar-contrasenia">Olvíde mi contraseña</a></div>

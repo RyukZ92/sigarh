@@ -1,0 +1,174 @@
+<?php
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<script>
+$(document).ready(function(){
+   $("#codigo_asignatura").change(function () {
+       $("#codigo_asignatura option:selected").each(function () {
+            id = $(this).val();
+            $.post("public/js/ajax/obtenerHorarioPorAsignatura.php", { id: id }, function(data){
+                $("#horario").html(data);//Destino
+            });            
+        });
+   })
+
+   $("#semestre").change(function () {
+       $("#semestre option:selected").each(function () {
+            id = $(this).val();
+            $.post("public/js/ajax/obtenerAsignaturaPorSemestre.php", { id: id }, function(data){
+                $("#codigo_asignatura").html(data);//Destino
+            });            
+        });
+   })
+    $(document).mouseenter(function () {        
+        $(".sub-cuerpo").css({'height':$(".vista").height()+20});        
+      });
+    $(document).mousemove(function () {        
+        $(".sub-cuerpo").css({'height':$(".vista").height()+20});        
+      });
+    $("select").keyup(function () {        
+        $(".sub-cuerpo").css({'height':$(".vista").height()+20});        
+      }) 
+});
+</script>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+
+if ($notificacion) {
+    echo $notificacion;
+}
+
+//$_SESSION["disabled"] = (count($_asignatura) == 0) ? "disabled" : "";
+?>
+<form class="pure-form pure-form-aligned" method="POST" action="<?php echo URLBASE . $_GET["vista"]; ?>">
+    
+    <fieldset>
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="2">Datos de la Asignatura</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="right">
+                        <label for="name">Semestre</label>
+                    </td>
+                    <td>
+                        <select id="semestre" name="semestre">
+                            <option value="0">Seleccione</option>
+                    <?php for($i=0;$i<count($_semestre);$i++): ?>
+                            <option value="<?php echo $_semestre[$i]["id"]; ?>"><?php echo $_semestre[$i]["nombre"]; ?></option>
+                    <?php endfor; ?>    
+                        </select>   
+                        <span class="campo-obligatorio">*</span>
+                    </td>        
+                </tr>                
+                <tr>
+                    <td align="right">
+                        <label for="Asignatura">Asignatura</label>
+                    </td>
+                    <td>
+                        <select id="codigo_asignatura" name="codigo_asignatura" <?php //echo $_SESSION["disabled"]; ?>>
+                            <option value="0">Seleccione</option>
+                    <?php 
+                   
+                        for($i=0;$i<count($_asignatura);$i++):
+                            //for($j=0 ;$j<count($_recordAcademico); $j++):
+                                if ($objCrudGenerica->contarFilas("record_academico", "codigo_asignatura = '" .  $_asignatura[$i]["codigo"] . "'") == 0):
+                                    echo "<option value='" . $_asignatura[$i]["codigo"] ."'>" . $_asignatura[$i]["nombre"] . "</option>";
+                                endif;
+                            //endfor;
+                        endfor;
+                    ?>    
+                        </select>   
+                        <span class="campo-obligatorio">*</span>
+                    </td>        
+                </tr> 
+                <tr>
+                    <td colspan="2">
+                        <div id="horario"></div>                        
+                    </td>        
+                </tr>            
+                <tr align="center">  
+                    <td  colspan="2" align="center">
+                        <input  onClick="return validarInscripcionDeAsignatura();" id="inscribir" type="submit" class="btn btn-success" value="Pre-Inscribir" name="inscribir" <?php //echo $_SESSION["disabled"]; ?>>
+                    </td>
+                </tr>
+            </tbody>
+        </table>    
+    </fieldset>
+
+<br />
+<?php if(count($_SESSION["id_horario"]) > 0): ?>
+    <table class="pure-table pure-table-horizontal">
+        <thead>
+            <tr>
+                <th>Asignatura</th>
+                <th>Sección</th>
+                <th>Día</th>
+                <th>Hora</th>
+                <th>Aula</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead> 
+        <tbody>
+<?php   for ($i=0;$i<count($_SESSION["id_horario"]); $i++):
+            if ($_SESSION["id_horario"][$i] != null):
+                
+                    $tabla = 'horario_asignatura h JOIN horas_asignatura ha ON (h.id = ha.id_horario_asignatura) JOIN asignatura a ON (a.codigo = h.codigo_asignatura)';
+                    $datos = array("dia", "hora_inicio", "hora_salida", "aula", "ha.id_horario_asignatura", "h.codigo_seccion", "a.nombre AS asignatura");
+                    $orden = null;
+                    $condicion = "id_horario_asignatura = '" . $_SESSION["id_horario"][$i] . "'";     
+                    $_horario = $objCrudGenerica->consultar($tabla, $datos, $condicion, $orden);
+                    for ($j=0; $j<count($_horario); $j++):
+                        $hora_inicio = AsistenteBasico::convertirHoraA12H($_horario[$i]["hora_inicio"]);
+                        $hora_salida = AsistenteBasico::convertirHoraA12H($_horario[$i]["hora_salida"]);
+?>        
+                       <tr>
+                           <td rowspan="1"><?php echo $_horario[$j]["asignatura"];  ?></td>
+                            <td rowspan="1"><?php echo $_horario[$j]["codigo_seccion"]; ?></td>
+                            <td><?php echo AsistenteBasico::obtenerDiaDeLaSemana($_horario[$j]["dia"]); ?></td>
+                            <td><?php echo $hora_inicio . " - " . $hora_salida; ?></td>
+
+                            <td><?php echo $_horario[$j]["aula"]; ?></td>
+<?php
+                    endfor;
+    ?>
+                        <td title='Eliminar' align=center> 
+                            <a href="<?php echo URLBASE.$_GET["vista"] . "/eliminar/".$_SESSION["id_horario"][$i]; ?>">
+                                <img src='<?php echo URLBASE; ?>public/img/remove.png'/>
+                            </a>
+                        </td>   
+                    </tr>
+
+<?php      
+            endif;
+        endfor;
+
+?>      
+                    <tr>
+                        <td colspan="6">Estudiante: <label><?php echo $_estudiante[0]["estudiante"]; ?></label></td>
+                    </tr>          
+                    <tr align="center">  
+                    <td  colspan="7" align="center">
+                        <input type="submit" class="btn btn-primary" value="Generar Inscripción" name="continuar">
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+</form>
+<?php endif; 
+/*
+echo "<pre>";
+print_r($_recordAcademico); 
+echo "</pre>";
+*/
+?>

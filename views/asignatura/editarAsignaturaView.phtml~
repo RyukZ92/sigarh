@@ -1,0 +1,78 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+<!--<div class="formulario" align="center">-->
+<form class="pure-form pure-form-aligned" method="POST">
+    <input type="hidden" value="<?php echo $_POST["codigo_asignatura"] ; ?>" name="codigo_asignatura">
+    <input type="hidden" value="<?php echo $_POST["pagina_referencia"] ; ?>" name="pagina_referencia">
+    <fieldset>
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="2">
+                        <label>Datos de la Asignatura</label>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <div class="pure-control-group">
+                        <td align="right">
+                            <label for="name">Semestre</label>
+                        </td>
+                        <td>
+                            <!--<select id="state" name="semestre" disabled>
+                        <?php for($i=0;$i<count($_semestre);$i++): ?>
+                            
+                                <option value="<?php echo $_semestre[$i]["id"]; ?>" <?php if ($_semestre[$i]["id"] == $_asignatura[0]["id_semestre"]) { echo "selected"; }?>><?php echo $_semestre[$i]["nombre"]; ?></option>
+                        
+                        <?php endfor; ?>    
+                            </select>   -->   
+                            <input type="text" value="<?php echo $_asignatura[0]["nombre_semestre"]; ?>" name="semestre" readonly>
+                        </td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="pure-control-group">
+                        <td align="right">
+                            <label for="email">Código de la Asignatura</label>
+                        </td> 
+                        <td>
+                            <input id="codigo" type="text" placeholder="Código de la Asignatura" maxlength="50" name="codigo"  value="<?php echo $_asignatura[0]["codigo"]; ?>">
+                        </td>
+                    </div>
+                </tr>               
+                <tr>
+                    <div class="pure-control-group">
+                        <td align="right">
+                            <label for="email">Nombre de la Asignatura</label>
+                        </td> 
+                        <td>
+                            <input id="asignatura" type="text" placeholder="Nombre de la Asignatura" maxlength="50" name="asignatura"  value="<?php echo $_asignatura[0]["nombre_asignatura"]; ?>">
+                        </td>
+                    </div>
+                </tr>
+                <tr align="center">  
+                    <div class="pure-control-group">
+                        <td  colspan="2" align="center">
+                            <input type="button" class="btn btn-primary" value="Cancelar" name="Salir" onClick="history.back();">
+                            <input type="submit" class="btn btn-primary" value="Guardar" name="editar">
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>    
+    </fieldset>
+</form>

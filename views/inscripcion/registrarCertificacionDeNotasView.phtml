@@ -1,0 +1,137 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<script>
+$(document).ready(function(){
+
+   $("#semestre").change(function () {
+ 
+       $("#semestre option:selected").each(function () {
+            id = $(this).val();
+            $.post("public/js/ajax/obtenerAsignaturaPorSemestreCertificacion.php", { id: id }, function(data){
+				$("#asignatura").html(data);//Destino
+            });            
+        });
+
+   });
+    $(function(){
+        $("body").on("click", ".fecha", function(){   
+                $(this).datepicker({ //Campo de Fecha
+                  changeMonth: true,
+                  changeYear: true
+                });
+                $(this).datepicker("show");
+        });
+    });
+
+    $(document).mousemove(function () {        
+        $(".sub-cuerpo").css({'height':$(".vista").height()+20});        
+      });
+    $("select").keyup(function () {        
+        $(".sub-cuerpo").css({'height':$(".vista").height()+20});        
+      }) 
+    $('.solo-numero-entero').keypress(function(tecla) {
+        if(tecla.charCode > 47 
+                && tecla.charCode < 58 
+                || tecla.charCode == 0
+                || tecla.charCode == 32) 
+                return true;
+            else 
+                return false;
+    });
+      
+});
+
+</script>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+<br>
+<form class="pure-form pure-form-aligned" method="POST">
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="2">Datos de las Notas Certificadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <label  for="semestre">Semestre</label>
+                    </td>
+                    <td>
+                        <select id="semestre" name="semestre">
+                            <option value="0">Seleccione</option>
+                    <?php for($i=0;$i<count($_semestre);$i++): ?>
+                            <option value="<?php echo $_semestre[$i]["id"]; ?>" <?php if ($_semestre[$i]["id"] == $_POST["semestre"]) { echo "selected"; }?>><?php echo $_semestre[$i]["nombre"]; ?></option>
+                    <?php endfor; ?>    
+                        </select>                           
+                    </td>
+                </tr>        
+            </tbody>
+        </table>    
+        <div id="asignatura"></div>
+
+<br>
+
+    <?php
+    if ($_SESSION["incremento"] > 0):
+    ?>    
+        <table class="pure-table pure-table-horizontal">  
+            <thead>
+                <tr>
+                    <th>Asignatura</th>
+                    <th>Nota</th>
+                    <th>Fecha</th>
+                    <th>Semestre</th>
+                </tr>
+            </thead>
+            <tbody> 
+
+    <?php            
+        for($i=0; $i<count($_SESSION["asignatura"]); $i++): 
+            $_semestre = $objCrudGenerica->consultar("semestre" , array("nombre"), "id = '" . $_SESSION["semestre"][$i] . "'", null);
+    ?>        
+                    <tr>
+                        <td><?php echo $_SESSION["nombre_asignatura"][$i]; ?></td>
+                        <td><?php echo $_SESSION["nota"][$i]; ?></td>
+                        <td><?php echo $_SESSION["fecha"][$i]; ?></td>
+                        <td><?php echo $_semestre[0]["nombre"]; ?></td>
+                    </tr>     
+    <?php    
+        endfor;
+    endif;    
+    ?>     
+    <?php
+    if ($_SESSION["incremento"] > 0):
+    ?>    
+            
+                <tr align="center">                       
+                    <td  colspan="4" align="center">
+                        <input type="submit" class="btn btn-primary" name="registrar" value="Registrar Notas">
+                    </td>
+                </tr>
+    <?php
+    endif;
+    ?>    
+            </tbody>
+        </table>  
+</form>
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href="javascript:void();" onClick="window.location='seleccionar-institucion-para-certificacion-de-notas'" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono' >Volver Atrás</div>
+            </a>
+        </div>
+    </div>

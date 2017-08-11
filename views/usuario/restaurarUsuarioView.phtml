@@ -1,0 +1,57 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+?>
+<!--<div class="formulario" align="center">-->
+<form class="pure-form pure-form-aligned" method="POST">
+    <input type="hidden" name="pagina_referencia" value="<?php echo $_POST["pagina_referencia"]; ?>">
+    <fieldset>
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center; color:red;" colspan="2">Confirmar la Restauración del Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+          
+                    <td align="right">
+                        <label for="email">Nombre y Apellido</label>
+                    </td>
+                    <td>
+                        <input readonly id="codigo" type="text" placeholder="" maxlength="20" name="usuario"  value="<?php echo $_usuario[0]["usuario"]; ?>">
+                    </td>
+                    
+                 </tr>            
+                <tr>
+                    <td align="center" colspan="2">
+                        <span style="color:blue;">¿Está seguro que desea restaurar al usuario?<br></span>
+                    </td> 
+                </tr>
+
+                <tr align="center">  
+
+                    <td  colspan="2" align="center">
+                        <input type="button" class="btn btn-danger" value="Cancelar" onClick="history.back();">  
+
+                        <input type="submit" class="btn btn-danger" value="Confirmar" name="confirmar">
+                    </td>
+
+                </tr>
+            </tbody>
+        </table> 
+    </fieldset>    
+</form>

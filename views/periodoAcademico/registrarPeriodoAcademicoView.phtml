@@ -1,0 +1,94 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+  <script>
+  $(function() {
+    $( "#fecha_desde" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      changeYear: true,
+      numberOfMonths: 1,
+      onClose: function( selectedDate ) {
+        $( "#fecha_hasta" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+    $( "#fecha_hasta" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      changeYear: true,
+      numberOfMonths: 1,
+      onClose: function( selectedDate ) {
+        $( "#fecha_desde" ).datepicker( "option", "maxDate", selectedDate );
+      }
+    });
+  });
+  </script>
+ 
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($_filas > 0):
+     echo $notificacion;
+else:
+    if ($notificacion) 
+        echo $notificacion;
+    ?>
+    <!--<div class="formulario" align="center">-->
+    <form class="pure-form pure-form-aligned" method="POST">
+        <fieldset>
+            <table class="pure-table pure-table-bordered" id="formulario">  
+                <thead>
+                    <tr>
+                        <th style="text-align: center;" colspan="2">Datos del Período Escolar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="email">Período Escolar</label>
+                            </td> 
+                            <td>
+                                <input id="codigo" type="text" placeholder="Período Escolar" maxlength="20" name="periodo"  value="<?php echo $_POST["periodo"]; ?>" autocomplete="off">
+                            </td>
+                        </div>
+                    </tr>               
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="fecha_desde">Desde</label>
+                            </td> 
+                            <td>
+                                <input id="fecha_desde" type="text" placeholder="Desde" maxlength="10" name="fecha_desde"  value="<?php echo $_POST["fecha_desde"]; ?>" autocomplete="off">
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="pure-control-group">
+                            <td align="right">
+                                <label for="fecha_hasta">Hasta</label>
+                            </td> 
+                            <td>
+                                <input id="fecha_hasta" type="text" placeholder="Hasta" maxlength="10" name="fecha_hasta"  value="<?php echo $_POST["fecha_hasta"]; ?>" autocomplete="off">
+                            </td>
+                        </div>
+                    </tr>
+                    <tr align="center">  
+                        <div class="pure-control-group">
+                            <td  colspan="2" align="center">
+                                <input type="button" class="btn btn-primary" value="Salir" onClick="window.location='<?php echo URLBASE; ?>inicio'">
+                                <input type="submit" class="btn btn-primary" value="Registrar" name="registrar">
+                            </td>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>    
+        </fieldset>
+    </form>
+<?php endif; ?>   

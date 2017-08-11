@@ -1,0 +1,147 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<script type='text/javascript'>
+function obtenerId(id) 
+{
+   return  $("#id_"+id).val();
+}
+    $(document).ready(function(){
+       $(".pure-button").click(function () { 
+            $(this).each(function () {
+                id = $(this).val();
+                //alert(id);
+            });
+        });            
+        // Cuando el mouse se pone encima de un elemento con el class=text
+        $(".text").click(function(event){
+             //alert($(".id").val());
+            // Ponemos en el div flotante el contenido del attributo content del div
+            
+            // donde se encuentra el mouse (this)
+                $.post("<?php echo URLBASE; ?>public/js/ajax/obtenerHorasDeAsignatura.php", { id: id }, function(data){
+                    $("#flotante").html(data);
+                    $("#flotante").css({left:event.pageX-770, top:event.pageY-240, display:"block"});
+                });
+            //$("#flotante").html(id);
+            // Posicionamos el div flotante y mo lostramos           
+            
+        });
+        // Cuando el mouse sale del elemento con el class=text
+
+        $(".text").mouseleave(function(event){
+
+            // Escondemos el div flotante
+
+            $("#flotante").hide();
+
+        });
+    });
+
+</script>
+<div class="tema"><?php echo $tema; ?></div>   
+
+<table class="pure-table pure-table-horizontal" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Docente</th>
+            <th>Asignatura</th>
+            <th>Semestre</th>
+            <th>Sección</th>
+            <th>Cupos</th>
+            <th>Horas</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+    for ($i=0; $i<COUNT($_horarioAsignatura); $i++):
+    echo "";
+    echo "<tr>
+            <td><a href=' " . URLBASE . "consultar-docente/buscar/". $_horarioAsignatura[$i]["dni"] . "'>" . $_horarioAsignatura[$i]["tipo_dni"]  . "-" . $_horarioAsignatura[$i]["dni"] . "</a></td>
+            <td>" . $_horarioAsignatura[$i]["nombre"] . "</td>
+            <td>" . $_horarioAsignatura[$i]["semestre"] . "</td>
+            <td>" . $_horarioAsignatura[$i]["codigo_seccion"] . "</td>
+            <td>" . $_horarioAsignatura[$i]["cupos"] . "</td>
+            <td title='Horas' align=center>
+                <a class='text' href='#'>
+                    <button class='button-secondary pure-button' value='" . $_horarioAsignatura[$i]["id"] . "'>Ver</button>
+                </a>
+            </td>
+            <td title='Editar' align=center>
+                <form method='POST' action='" . URLBASE . "editar-horario-por-docente'>
+                        <input type='hidden' name='pagina_referencia' value='" . $_GET["pagina"] ."'>
+                        <input type='hidden' name='id_horario' value='" . $_horarioAsignatura[$i]["id"] ."'>
+                    <input type='image'src='" . URLBASE . "public/img/pencil.png'/>
+                </form>
+            </td>                
+        </tr>";
+    endfor; ?>
+    </tbody>
+</table>
+
+<div id="flotante"></div>
+
+<p>
+
+
+</p>
+
+<div class='paginador' align='center' >
+        <ul>
+            <li>
+            <?php if($params['primero']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['primero']; ?>">
+                <input type="button" value="Primera" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                    <input type="button" value="Primera" disabled class="btn-disabled" />
+            <?php	endif; ?>
+
+            </li>
+            <li>
+            <?php if($params['anterior']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['anterior']; ?>">
+                <input type="button" value="&larr; Anterior"  class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="&larr; Anterior" disabled class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['siguiente']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['siguiente']; ?>">
+                <input type="button" value="Siguiente &rarr;" class="btn-enabled" />
+                </a>	
+            <?php	else: ?>
+                <input type="button" value="Siguiente &rarr;" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['ultimo']):	?>
+                <a  class='parametro'  class='parametro' href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['ultimo']; ?>">
+                <input type="button" value="Última" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="Última" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+        </ul>
+    </div>
+<?php if($pagina < 2): ?>
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="window.location='<?php echo URLBASE; ?>consultar-asignatura';" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>

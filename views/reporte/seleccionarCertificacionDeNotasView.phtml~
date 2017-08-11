@@ -1,0 +1,49 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if ($notificacion) {
+    echo $notificacion;
+}
+
+?>
+<form class="pure-form pure-form-aligned" method="POST">
+    <fieldset>
+        <table class="pure-table pure-table-bordered" id="formulario">  
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="2">seleccione el Tipo de Certificacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <td align="right">
+                        <label for="name">Tipo de Certificación</label>
+                    </td>
+                    <td>
+                        <select id="tipo_constancia" name="tipo_certificacion">                          
+                            <option value="general" <?php if ($_POST["tipo_certificacion"] == "general") { echo "selected";}?>>Media General</option>		
+                            <option value="profesional" <?php if ($_POST["tipo_certificacion"] == "profesional") { echo "selected";}?>>Media Profesional</option>
+                        </select>
+                        <span class='campo-obligatorio'>*</span>
+                    </td>       
+                </tr>
+              
+    
+                <tr align="center">
+                    <td  colspan="2" align="center">
+                        <input type="button" class="btn btn-primary" value="Atrás" onClick="window.location='<?php echo URLBASE; ?>seleccionar-reporte'">
+                        <input type="submit" class="btn btn-primary" value="Enviar" name="enviar">
+                    </td>      
+                </tr>
+            </tbody>
+        </table>    
+    </fieldset>
+</form>

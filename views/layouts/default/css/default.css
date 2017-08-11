@@ -1,0 +1,161 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09/06/2015, 06:54:02 PM
+    Author     : Miguel Salazar
+*/
+* {
+    margin:0;
+    padding:0;
+}
+#cabecera { 
+    width: 100%;
+    height: 70px;
+    border: 0px solid #000;
+    background-image: url(../../../../public/img/cabecera.png);
+    background-repeat: no-repeat;
+}
+html {
+    height: 100%;
+}
+#body {
+    background-image:URL(../../../../public/img/bg.gif);    
+    height: 100%; 
+}
+.cuerpo {    
+    margin:auto;
+    width: 1024px;  
+    height:auto;    
+    border-radius: 0px;
+    box-shadow:0 0px 01px rgba(0,0,0, .7) inset,0 0px 01px rgba(0,0,0, .7);
+    background: #f7f7f7;
+    background: linear-gradient(#fff 0%, #fff 100%);
+    border: 0px solid #000; 
+    
+}
+.tema {    
+    margin:auto;
+    width: 100%;
+    height: 50px;
+    background: #f4f4f4;
+    font-size: 18px;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    
+    margin-bottom: 4%;
+    box-shadow: 0 1px 2px #777;
+    text-align: center;
+}
+.sub-cuerpo {
+    clear: both;
+    margin:auto;   
+    width:100%;   
+    display: block;
+    border: 0px solid #000;
+    padding-bottom: 1.5%;
+}
+.vista {
+    position:absolute;
+    width: 823px;
+    min-height: 550px;
+    border: 0px solid #000;
+    margin-left: 200px;
+    top:131px;    
+}
+#vista-sesion {
+    margin:auto;
+    text-align: center;
+    border: 1px solid #000;
+    width:824px;
+    height:100%;
+    
+}
+.inicio-sesion {    
+    margin:auto;
+    border:1px solid #d9d9d9;
+    width:25em;
+    padding: 1em;
+    height:100%;
+    background: #fff;
+    margin-top: 5%;
+    background-image:URL(../../../../public/img/body_background.jpg);
+    box-shadow:0 01px 01px rgba(0,0,0, .1) inset,0 01px 01px rgba(0,0,0, .1);
+    border-radius: 3px;
+    
+}
+#pie-de-pagina {
+    
+    bottom: 0;
+    margin: auto;
+    width: 1024px; 
+    height: 60px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    color: #f9f9f9;
+    text-align: center;
+    box-shadow:0 0px 00px rgba(0,0,0, .7) inset,0 0px 01px rgba(0,0,0, .7);
+    text-align: center; width: 500%; bottom: 0px; width: 1024px;
+    padding-top: 1.5%;
+    background: #0f71ba;   
+    background: -moz-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3fa4f0), color-stop(100%, #0f71ba));
+    background: -webkit-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+    background: -o-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+    background: -ms-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+    background: linear-gradient(to bottom, #3fa4f0 0%, #0f71ba 100%);
+}
+#pie-de-pagina div {
+    margin:auto;    
+}
+.formulario {
+    margin:auto;
+    width: 45em;
+    padding:1em;
+    border:1px solid #d9d9d9;
+    background: #fff;
+    margin-top: 1em;
+    background-image:URL(../../../../public/img/body_background.jpg);
+    box-shadow:0 01px 01px rgba(0,0,0, .1) inset,0 01px 01px rgba(0,0,0, .1);
+    border-radius: 3px;
+    padding-bottom: 0;
+}
+#formulario {
+     width: 40em;
+}
+#formulario table {
+    margin-top: 2em;
+}
+#formulario input[type='reset'],
+#formulario input[type='button'],
+#formulario input[type='submit'] {
+    margin: 0.5em;
+}
+#formulario th{
+     text-align: center;
+}
+#alertas {
+    margin:auto;
+    width: 40em;
+}
+.campo-obligatorio {
+    font-size:12px;
+    color:red;
+}
+input[type='checkbox'], input[type='radio'] {
+    position:relative;
+    top:-3px;
+}
+tbody tr:hover {
+    background: #f7f7f7;
+    color: #000;
+}
+#titulo-sistema {
+    background: #f0f0f0;
+    margin:auto;
+    width:100%;
+    height: 5px;    
+}

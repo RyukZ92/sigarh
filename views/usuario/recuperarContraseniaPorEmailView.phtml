@@ -1,0 +1,58 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+
+<div class="tema"><?php echo $tema; ?></div>
+
+<?php
+if($notificacion) {
+    echo $notificacion;
+}
+if ($recuperacion == 1) {
+    echo '<div class="alert alert-success" role="alert" style="margin:auto;width: 40em;">
+          <strong>¡Muy bien!</strong> Su nueva contraseña fue enviada a su correo electrónico
+          <a style="float:right;"href="' . URLBASE . '" title="Iniciar Sesión">Iniciar Sesión</a>
+                  
+</div>';
+ 
+           
+}
+if ($recuperacion != 1):
+?>
+<!--<div class="formulario" align="center" >-->
+<form class="pure-form pure-form-aligned" method="POST">
+    <fieldset>
+        
+        <table class="pure-table pure-table-bordered" id="formulario">
+            <thead>
+                <tr>
+                    <th colspan="2">Datos de Recuperación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="right">
+                        <label for="name">Correo Electrónico</label>
+                    </td>
+                    <td>
+                        <input autocomplete="off" type="text" placeholder="Correo Electrónico" maxlength="60" name="email" value="<?php echo $_POST["email"]; ?>">
+                    </td>
+                </tr>
+             
+                <tr>
+                    <td  colspan="2" align="center">
+                        <input type="button" class="btn btn-primary" value="Salir" onClick="window.location='<?php echo URLBASE; ?>'">
+                        <input type="submit" class="btn btn-primary" value="Enviar" name="enviar">
+                    </td>                   
+                </tr>
+            </tbody>  
+        </table>
+    </fieldset>
+</form>
+<?php endif; ?>

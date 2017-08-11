@@ -1,0 +1,97 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<table class="pure-table pure-table-horizontal" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Período</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Registrado</th>
+            <th>Cerrado</th>
+            <th>Estatus</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+	for ($i=0; $i<COUNT($_periodo); $i++):
+            $cierre = ($_periodo[$i]["fecha_cierre"] == null ? "<center>---</center>" : AsistenteBasico::convertirFechaDdMmAaaa($_periodo[$i]["fecha_cierre"]));
+            $estilo = ($_periodo[$i]["estatus"] == '1') ? "color:green;" : "color:gray;";
+            $estatus = (($_periodo[$i]["estatus"] == '1')) ? "<a title='Clic para Cerrar Período Académico' href='cerrar-periodo'>Activo</a>":"<font color=gray>Finalizado</font>";
+        echo "<tr style='$estilo' >
+                <td>" . $_periodo[$i]["periodo_academico"] ."</td>
+                <td>" . AsistenteBasico::convertirFechaDdMmAaaa($_periodo[$i]["fecha_desde"]) . "</td>
+                <td > " . AsistenteBasico::convertirFechaDdMmAaaa($_periodo[$i]["fecha_registro"]) . "</td>    
+                <td > " . AsistenteBasico::convertirFechaDdMmAaaa($_periodo[$i]["fecha_hasta"]) . "</td>
+                <td > " . $cierre . "</td>
+                <td align=center>" . $estatus ."</td>
+                
+            </tr>";
+	endfor; //href='carga-horaria/buscar/" . $_periodo[$i]["dni"] . "' ?>
+    </tbody>
+</table>
+            <div class="contenido" >
+                <div id="dialogo" class="ventana" title="Carga horaria del Docente">
+                </div>
+            </div>	
+
+<div class='paginador' align='center' >
+        <ul>
+            <li>
+            <?php if($params['primero']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['primero']; ?>">
+                <input type="button" value="Primera" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                    <input type="button" value="Primera" disabled class="btn-disabled" />
+            <?php	endif; ?>
+
+            </li>
+            <li>
+            <?php if($params['anterior']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['anterior']; ?>">
+                <input type="button" value="&larr; Anterior"  class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="&larr; Anterior" disabled class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['siguiente']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['siguiente']; ?>">
+                <input type="button" value="Siguiente &rarr;" class="btn-enabled" />
+                </a>	
+            <?php	else: ?>
+                <input type="button" value="Siguiente &rarr;" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['ultimo']):	?>
+                <a  class='parametro'  class='parametro' href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['ultimo']; ?>">
+                <input type="button" value="Última" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="Última" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+        </ul>
+    </div>
+<!--<?php if ($pagina < 2): ?>  
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="history.back();" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>-->

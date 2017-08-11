@@ -1,0 +1,72 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+<?php
+/*
+if ($notificacion) {
+    echo $notificacion;
+}*/
+$cantidadNotas = 5;
+?>
+<table class="pure-table pure-table-striped" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Documento</th>
+            <th>Nombre</th>
+<?php for ($i=1; $i<=$cantidadNotas; $i++): ?>  
+            <th>Nota <?php echo $i; ?></th>
+<?php endfor; ?>            
+        </tr>
+    </thead>
+
+    <tbody>
+    <form method="POST">
+<?php 
+	for ($i=0; $i<COUNT($_estudiante); $i++):
+            $_horarioAsignatura = $objCrudGenerica->consultar("horario_asignatura", array("codigo_asignatura"), "id = '" . $_SESSION["asignatura"] . "'", null);
+            
+            $tabla = "calificacion c JOIN inscripcion i ON (c.id_inscripcion = i.id)";
+            $datos = array("c.id");
+            $condicion = "periodo_academico = '" . $_SESSION["periodo"] . "' AND c.codigo_asignatura = '" . $_horarioAsignatura[0]["codigo_asignatura"] . "' AND i.dni_estudiante = '" . $_estudiante[$i]["dni"] . "'";
+            $orden = null;
+            $_calificacion = $objCrudGenerica->consultar($tabla, $datos, $condicion, $orden);
+            $_SESSION["id_calificacion"][$i] = $_calificacion[0]["id"];
+            $nombre = explode(" ", $_estudiante[$i]["nombre"]);
+            $apellido = explode(" ", $_estudiante[$i]["apellido"]);
+            
+            $_nota = $objCrudGenerica->consultar("nota", null, "id_calificacion = '" . $_SESSION["id_calificacion"][$i] . "'", "id ASC");
+            echo "<tr>
+                    <td>" . $_estudiante[$i]["tipo_dni"] . "-" .$_estudiante[$i]["dni"] . "</td>
+                    <td>" . $nombre[0] . " " . $apellido[0] . "</td>";
+        for ($j=0; $j<$cantidadNotas; $j++): 
+            $nota = ($_nota[$j]["nota"] > 0) ? $_nota[$j]["nota"] : 0 ;
+            echo "<td><input type='text' class='notas' onKeyPress='return soloNumeroEntero(event);' maxlength='5' name='nota" . $_SESSION["id_calificacion"][$i] . "[]' value='$nota'></td>";
+         endfor;
+            echo "</tr>";
+	endfor; 
+        ?>
+    <tr>
+        
+        <td colspan="<?php echo $cantidadNotas+1; ?>"><span style="color:blue;">Las notas con cero puntos, no se tomarán en cuenta para calcular el promedio</span></td>
+        <td colspan="4" align="right">  
+            <input type="submit" value="Actualizar" name="actualizar" class="btn btn-primary">
+        </td>
+    </tr>
+    </form>
+    </tbody>
+</table>
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="history.back();" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+    </div>

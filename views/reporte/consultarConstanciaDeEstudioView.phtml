@@ -1,0 +1,215 @@
+<?php
+ob_start();
+//$_SESSION["emision_de_constancia"] = true;
+$nombre_emision = explode(" ", $_SESSION["nombre_sesion"]);
+$apellido_emision = explode(" ", $_SESSION["apellido_sesion"]);
+?>
+<style type="text/css">
+
+    *{       
+        font-size: 12pt;
+        line-height: 1.5;
+        font-family: arial;
+        color:#000;
+        margin:0;
+        padding:0;
+    }
+    .banner{
+        width: auto;
+        margin: auto;
+        text-align: center;
+        margin-top: 30px;
+        padding: 0; 
+        
+    }
+    .banner img {
+        width: 650px;
+        height: auto;
+    }
+    #cuerpo {
+        margin: auto;
+        width: 100%;
+        height:auto;
+        border:0px;
+        
+    }
+    #tema {
+        margin: auto;
+        margin-top: 80px;
+        text-align:center;
+        font-weight: bold;
+    }
+    table {
+        margin: auto;
+        width: 100%;
+        border:0px;
+    }
+    td {
+        width: 100%;
+        
+    }
+    #contenido {  
+        
+        margin: auto;
+        margin-top:40px;
+        vertical-align: middle; 
+        text-align: justify;
+        padding:5%;
+        border:0px;
+        width:100%;
+    }
+    #contenido p {
+        text-indent:50px;
+    }
+    #firma {
+        margin: auto;
+        text-align: center;
+        width: auto;
+        margin-top:150px;
+        border:0px;
+        border-top:1px;
+        padding-right:10px;
+        padding-left:10px;
+    }
+    #firma hr {
+        margin:0;
+        border:1px solid #000;
+        text-align: center;
+        
+    }
+    #firma label {
+        margin:auto;
+        text-align: center;
+        margin-top:10px;
+        width: 100%;
+        border:0px;
+    }
+    #pie {
+        margin: auto;
+        text-align: center;
+        width: auto;
+        margin-top:100px;
+        border:0px;
+        line-height: 0;
+    }
+
+    #pie label {
+        margin:auto;
+        text-align: center;
+        margin-top:10px;
+        width: 100%;
+        font-size:8pt;
+        font-weight: bold;
+    }
+    #pie-de-pagina {        
+        heigh:auto;        
+        margin:auto;
+        font-size: 10pt;       
+    }
+    #pagina {  
+        position: relative;
+        font-size: 10pt;
+        left:60px;
+        text-align: left;
+    }
+    #datos-emision {
+        position: relative;
+        top:-20px;
+        font-size: 10pt;
+        text-align: right;
+        right:60px;
+    }
+  </style>
+
+<page backtop='30mm' backbottom='20mm' backleft='20mm' backright='20mm'>
+    
+    <page_header>
+        
+        <div class="banner" ><img src="<?php echo URLBASE; ?>/public/img/<?php echo $institucion["img_reporte"]; ?>" /></div>
+    </page_header>
+    <page_footer>
+        <div id="pie-de-pagina">
+            <div id="pagina">Página [[page_cu]]/[[page_nb]]</div>
+            <div id="datos-emision">Emitido por <?php echo $nombre_emision[0] . " " . $apellido_emision[0];  ?> a las <?php echo date('h:i:s A'); ?></div> 
+        </div>
+    </page_footer>
+    <div id="cuerpo">
+        <div id="tema"><?php echo $tema; ?></div>
+        <table>
+            <tr>
+                <td>
+                    <div id="contenido">
+                        <p>
+                        Quien Suscribe, <?php echo $especialidad; ?> <b><?php echo $director; ?></b>, titular del Documento Nacional de Identidad N°: <b><?php echo $dniDirector; ?>,</b>
+                        Director (E) del plantel <b><?php echo $nombre_institucion; ?>,</b> Código D.E.A.: <b><?php echo $codigoInstitucion; ?></b>, 
+                        ubicada en la ciudad de <?php echo $ciudad; ?>, parroquita <?php echo $parroquia; ?>, municipio <?php echo $municipio; ?> del Estado <?php echo $estado; ?>, hace constar que <?php echo $ciudadano; ?> 
+                        <b><?php echo $estudiante; ?></b>, titular del Documento Nacional de Identidad N°: <b><?php echo $dniEstudiante; ?></b>, cursa sus estudios en esta institución 
+                        del <b><?php echo $semestre; ?></b> de Educación <b><?php echo $tipoEducacion; ?></b>.
+                        </p>
+                        <br>
+                        <p>
+                        Constancia que se expide a petición de parte interesada en la ciudad de <b><?php echo $ciudad; ?></b> al día <b><?php echo date('d'); ?></b> del mes de <b><?php echo $mes ?></b> de <b><?php echo date('Y'); ?></b>.
+                        </p>
+                    </div>
+                    
+                </td>
+        </tr>
+        </table>    
+    </div>
+    <div id="firma">       
+        <label>            
+            <?php echo $director; ?>
+        </label>
+        <br>
+        <label>            
+            <?php echo $dniDirector; ?>
+        </label>
+        <br>
+        <label>            
+            Director (E) 
+        </label>
+        <br>
+        <label>            
+            Teléf.:  <?php echo $telefono; ?>
+        </label>
+    </div>
+    <div id="pie">
+        <label>            
+            <?php echo $nombre_institucion; ?>
+        </label>
+        <br>
+        <label>            
+            <?php echo $direccion; ?>
+        </label>
+        <br>
+        <label>            
+            Código: <?php echo $codigoInstitucion; ?>
+        </label>
+        <br>
+        <label>            
+            E-mail: <?php echo $email; ?>
+        </label>        
+        
+    </div>
+  
+</page>
+<?php
+     $contenido = ob_get_clean();
+     $direccion = "files/downloads/";
+     $carpeta = "Estudio/";
+ob_clean();
+    try
+    {
+    $html2pdf = new HTML2PDF('P','letter','es','true','UTF-8');
+    $html2pdf->setDefaultFont('Arial');
+    $html2pdf->pdf->SetDisplayMode('fullpage');
+    $html2pdf->writeHTML($contenido, isset($_GET['vuehtml']));
+    $html2pdf->Output($salida);
+
+
+    }
+    catch(HTML2PDF_exception $e) {
+        echo $e;
+        exit;
+    }
+

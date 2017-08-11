@@ -1,0 +1,43 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>   
+       
+<br>
+<table class="pure-table" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Documento</th>
+            <th>Nombre y Apellido</th>
+            <th>Sexo</th>
+            <th>Edad</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+	for ($i=0; $i<COUNT($_responsable); $i++):
+            $estilo = ($i%2==0) ?"pure-table-odd":"";
+        echo "<tr class='" . $estilo . "' >
+                <td>" . $_responsable[$i]["tipo_dni"] . "-" . $_responsable[$i]["dni"] ."</td>
+                <td>" . $_responsable[$i]["nombre"] . " " . $_responsable[$i]["apellido"] . "</td>
+                <td>" . $_responsable[$i]["sexo"] . "</td>
+                <td > " . AsistenteBasico::obtenerEdad($_responsable[$i]["fecha_natal"]) . " años</td>
+            </tr>";
+	endfor; ?>
+    </tbody>
+</table>
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="history.back();" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+    </div>

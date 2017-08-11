@@ -1,0 +1,65 @@
+        <link rel="stylesheet" href="<?php echo URLBASE; ?>public/bootstrap-3.3.4-dist/css/bootstrap.css">
+        <a href="#"></a>
+<form method="POST" target="_blank" action="<?php echo URLBASE . "horario-de-clases-estudiantil"?>">        
+<table class="pure-table  pure-table-bordered" style="margin:auto;">
+ 
+        <tr>
+            <th style="background: #f0f0f0;">Documento</th>
+            <td><?php echo $_estudiante[0]["tipo_dni"] . "-" . $_estudiante[0]["dni"]; ?></td>
+        </tr>
+        <tr>
+            <th style="background: #f0f0f0;">Nombre y Apellido</th>
+            <td><?php echo $_estudiante[0]["nombre"] . " " . $_estudiante[0]["apellido"]; ?></td>
+        </tr>
+        <tr>
+            <th style="background: #f0f0f0;">Sexo</th>
+            <td><?php echo $_estudiante[0]["sexo"]; ?></td>
+        </tr>
+        <tr>
+            <th style="background: #f0f0f0;">Edad</th>
+            <td><?php echo AsistenteBasico::obtenerEdad($_estudiante[0]["fecha_natal"]). " años"; ?></td>
+        </tr>
+        <tr>
+            <th style="background: #f0f0f0;">Teléfono de Contacto</th>
+            <td><?php echo $_estudiante[0]["telefono"]; ?></td>
+        </tr>
+        <tr>
+            <th style="background: #f0f0f0;">Lugar de Nacimiento</th>
+            <td><?php echo $_estudiante[0]["lugar_nacimiento"]; ?></td>
+        </tr>    
+        <tr>
+            <th style="background: #f0f0f0;">Direción Habitacional</th>
+            <td><?php echo $_estudiante[0]["direccion"]; ?></td>
+        </tr>
+<?php 
+if (count($_semestre) == 0):
+    echo "<tr>";
+        echo "<th style='background: #f0f0f0;'>Inscripción</th>";
+        echo "<td><span><font color=red>El Estudiante no se encuentra inscrito</font></span</td>";
+    echo "</tr>";    
+else:
+?>
+        <tr>
+            <th style="background: #f0f0f0;">Semestre</th>
+            <td><?php echo $_semestre[0]["semestre"]; ?></td>
+        </tr>
+        <tr>
+            <th style="background: #f0f0f0;">Período Académico</th>
+            <td><?php echo $_estudiante[0]["periodo_academico"]; ?></td>
+        </tr>
+        <tr>
+            <th style="background: #f0f0f0;">Horario Actual</th>
+            <td><input type="image" src="<?php echo URLBASE; ?>/public/img/pdf.png"></td>
+        </tr>        
+        <tr>
+            <th style="background: #f0f0f0;">Certificación de Notas</th>
+            <td><a href="certificacion-de-notas"><img src="<?php echo URLBASE; ?>/public/img/pdf.png"></a></td>
+        </tr>
+        
+<?php endif; ?>
+    <tbody>
+
+    </tbody>
+</table>
+        <input type="hidden" name="dni_estudiante" value="<?php echo $_estudiante[0]["dni"]; ?>">
+</form>

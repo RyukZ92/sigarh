@@ -1,0 +1,93 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<table class="pure-table pure-table-horizontal" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Ciudad</th>
+            <th>Estado</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+	for ($i=0; $i<COUNT($_institucion); $i++):
+
+        echo "<tr>
+                <td>" . $_institucion[$i]["nombre"] . "</td>
+                <td>" . $_institucion[$i]["ciudad"] . "</td>
+                <td>" . $_institucion[$i]["estado"] . "</td>
+                <td title='Editar' align=center>
+                    <form method='POST' action='" . URLBASE . "editar-institucion-escolar'>
+                        <input type='hidden' name='pagina_referencia' value='" . $_GET["pagina"] ."'>
+                            <input type='hidden' name='id' value='" . $_institucion[$i]["id"] ."'>
+                        <input type='image'src='" . URLBASE . "public/img/pencil.png'/>
+                    </form></td>
+            </tr>";
+	endfor; ?>
+    </tbody>
+</table>
+<?php if(empty($_GET["buscar"])): ?>
+
+<div class='paginador'  align='center'>
+    <ul>
+        <li>
+        <?php if($params['primero']):	?>
+            <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['primero']; ?>">
+            <input type="button" value="Primera" class="btn-enabled" />
+            </a>
+        <?php	else: ?>
+                <input type="button" value="Primera" disabled class="btn-disabled" />
+        <?php	endif; ?>
+
+        </li>
+        <li>
+        <?php if($params['anterior']):	?>
+            <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['anterior']; ?>">
+            <input type="button" value="&larr; Anterior"  class="btn-enabled" />
+            </a>
+        <?php	else: ?>
+            <input type="button" value="&larr; Anterior" disabled class="btn-disabled" />
+        <?php	endif; ?>
+        </li>
+        <li>
+        <?php if($params['siguiente']):	?>
+            <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['siguiente']; ?>">
+            <input type="button" value="Siguiente &rarr;" class="btn-enabled" />
+            </a>	
+        <?php	else: ?>
+            <input type="button" value="Siguiente &rarr;" class="btn-disabled" />
+        <?php	endif; ?>
+        </li>
+        <li>
+        <?php if($params['ultimo']):	?>
+            <a  class='parametro'  class='parametro' href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['ultimo']; ?>">
+            <input type="button" value="Última" class="btn-enabled" />
+            </a>
+        <?php	else: ?>
+            <input type="button" value="Última" class="btn-disabled" />
+        <?php	endif; ?>
+        </li>
+    </ul>
+</div>
+<?php endif; ?>
+<!--<?php if ($pagina < 2): ?>  
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="history.back();" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>-->

@@ -1,0 +1,106 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+    <table style="margin:auto;">
+        <tr>
+            <td> 
+                <form class="pure-form pure-form-aligned" method="POST" onSubmit="return validarCampoBuscar('campo')">
+                    <input id="campo" type="text" placeholder="Documento de Identidad" onKeyUp="autocompletadoEstudianteEliminado();" autocomplete="off" name="buscar"> <input type="submit" value="Buscar" class="btn btn-default">
+                </form>
+                <ul id="lista_dni"></ul>
+            </td>
+        </tr>
+    </table>   
+<br>
+<table class="pure-table pure-table-horizontal" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Documento</th>
+            <th>Nombre y Apellido</th>
+            <th>Sexo</th>
+            <th>Edad</th>
+            <th>Restaurar</th>
+          
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+	for ($i=0; $i<COUNT($_estudiante); $i++):
+        echo "<tr>
+                <td>" . $_estudiante[$i]["tipo_dni"] . "-" . $_estudiante[$i]["dni"] ."</td>
+                <td>" . $_estudiante[$i]["nombre"] . " " . $_estudiante[$i]["apellido"] . "</td>
+                <td>" . $_estudiante[$i]["sexo"] . "</td>
+                <td > " . AsistenteBasico::obtenerEdad($_estudiante[$i]["fecha_natal"]) . " años</td>
+                <td title='Restauarar' align=center>
+                    <form method='POST' action='" . URLBASE . "restaurar-estudiante'>
+                        <input type='hidden' name='dni_estudiante' value='" . $_estudiante[$i]["dni"] ."'>
+                        <input type='image' src='" . URLBASE . "public/img/restore.png'/>
+                    </form>
+                </td>                               
+            </tr>";
+	endfor; ?>
+    </tbody>
+</table>
+
+<div class="contenido" >
+    <div id="dialogo_estudiante" class="ventana" title="Detalle del Estudiante">
+    </div>
+</div>	
+
+<div class='paginador' align='center' >
+        <ul>
+            <li>
+            <?php if($params['primero']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['primero']; ?>">
+                <input type="button" value="Primera" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                    <input type="button" value="Primera" disabled class="btn-disabled" />
+            <?php	endif; ?>
+
+            </li>
+            <li>
+            <?php if($params['anterior']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['anterior']; ?>">
+                <input type="button" value="&larr; Anterior"  class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="&larr; Anterior" disabled class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['siguiente']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['siguiente']; ?>">
+                <input type="button" value="Siguiente &rarr;" class="btn-enabled" />
+                </a>	
+            <?php	else: ?>
+                <input type="button" value="Siguiente &rarr;" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['ultimo']):	?>
+                <a  class='parametro'  class='parametro' href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['ultimo']; ?>">
+                <input type="button" value="Última" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="Última" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+        </ul>
+    </div>
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="window.location='<?php echo URLBASE; ?>consultar-estudiante'" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono' >Volver Atrás</div>
+            </a>
+        </div>
+    </div>

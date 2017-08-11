@@ -1,0 +1,120 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+  <script>
+  $(function() {
+    $( "#fecha_desde" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      changeYear: true,
+      numberOfMonths: 1,
+      onClose: function( selectedDate ) {
+        $( "#fecha_hasta" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+    $( "#fecha_hasta" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      changeYear: true,
+      numberOfMonths: 1,
+      onClose: function( selectedDate ) {
+        $( "#fecha_desde" ).datepicker( "option", "maxDate", selectedDate );
+      }
+    });
+  });
+  </script>
+ 
+<div class="tema"><?php echo $tema; ?></div>
+        <table style="margin:auto;">
+            <tr>
+                <td> 
+                    <form class="pure-form pure-form-aligned" method="POST" onSubmit="return validarRangodeFecha('fecha_desde', 'fecha_hasta');">
+                        <input id="fecha_desde" type="text" placeholder="Desde" maxlength="10" name="fecha_desde"  autocomplete="off">
+                        -
+                        <input id="fecha_hasta" type="text" placeholder="Hasta" maxlength="10" name="fecha_hasta"  autocomplete="off">
+                        <input type="submit" value="Buscar" class="btn btn-default">
+                     </form>
+                        <ul id="lista_dni"></ul>
+                </td>
+            </tr>
+        </table>    
+<br>
+<table class="pure-table pure-table-horizontal" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Acción Ejecutada</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+	for ($i=0; $i<count($_historial); $i++):
+        echo "<tr>
+                <td>" . $_historial[$i]["usuario"] . "</td>
+                <td>" . $_historial[$i]["accion"] . "</td>
+                <td align=center>" . AsistenteBasico::convertirFechaDdMmAaaa($_historial[$i]["fecha"]) . "</td>
+                <td align=center>" . AsistenteBasico::convertirHoraA12H($_historial[$i]["hora"]) . "</td>   
+            </tr>";
+	endfor; ?>
+    </tbody>
+</table>
+<div class='paginador' align='center' >
+        <ul>
+            <li>
+            <?php if($params['primero']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['primero']; ?>">
+                <input type="button" value="Primera" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                    <input type="button" value="Primera" disabled class="btn-disabled" />
+            <?php	endif; ?>
+
+            </li>
+            <li>
+            <?php if($params['anterior']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['anterior']; ?>">
+                <input type="button" value="&larr; Anterior"  class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="&larr; Anterior" disabled class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['siguiente']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['siguiente']; ?>">
+                <input type="button" value="Siguiente &rarr;" class="btn-enabled" />
+                </a>	
+            <?php	else: ?>
+                <input type="button" value="Siguiente &rarr;" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['ultimo']):	?>
+                <a  class='parametro'  class='parametro' href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['ultimo']; ?>">
+                <input type="button" value="Última" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="Última" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+        </ul>
+    </div>
+<!--<?php if ($pagina < 2): ?>  
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="history.back();" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+<?php endif; ?>
+    </div>-->

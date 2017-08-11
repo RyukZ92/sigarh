@@ -1,0 +1,405 @@
+<?php
+
+/* 
+ * To change tdis license header, choose License Headers in Project Properties.
+ * To change tdis template file, choose Tools | Templates
+ * and open tde template in tde editor.
+ */
+?>
+
+<form target="_blank" method="POST" action="<?php echo URLBASE ?>carga-horaria-de-docente">
+<table class="pure-table pure-table-bordered" style="margin:auto;">
+    
+        <tr class='pure-table-odd'>
+            <td colspan=8 align=center>
+            <label>Bloque N° 1</label>
+            </td>
+       </tr>
+       <tr class='pure-table-odd'>
+            <td></td>
+            <td><b>Lunes</b></td>
+            <td><b>Martes</b></td>
+            <td><b>Miércoles</b></td>
+            <td><b>Jueves</b></td>
+            <td><b>Viernes</b></td>
+        </tr>        
+  
+
+    <tbody>
+<?php 
+    echo "<tr>";
+            echo "<td><b>Asignatura</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["lunes"]["nombre_asignatura"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["martes"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["martes"]["nombre_asignatura"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["miercoles"]["nombre_asignatura"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["jueves"]["nombre_asignatura"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["viernes"]["nombre_asignatura"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    echo "<tr>";
+            echo "<td><b>Hora</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][0])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["lunes"]["hora_inicio"][0]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["lunes"]["hora_salida"][0]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif;  
+                if (!empty($_horarioDocente["martes"]["dia"][0])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["martes"]["hora_inicio"][0]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["martes"]["hora_salida"][0]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][0])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["miercoles"]["hora_inicio"][0]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["miercoles"]["hora_salida"][0]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][0])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["jueves"]["hora_inicio"][0]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["jueves"]["hora_salida"][0]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][0])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["viernes"]["hora_inicio"][0]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["viernes"]["hora_salida"][0]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    echo "<tr>";
+            echo "<td><b>Sección</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["lunes"]["seccion"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["martes"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["martes"]["seccion"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["miercoles"]["seccion"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["jueves"]["seccion"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["viernes"]["seccion"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    echo "<tr>";
+            echo "<td><b>Aula</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["lunes"]["aula"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["martes"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["martes"]["aula"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["miercoles"]["aula"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["jueves"]["aula"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][0])):   
+                    echo  "<td>" . $_horarioDocente["viernes"]["aula"][0] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+if(!empty($_horarioDocente["lunes"]["dia"][1])
+    || !empty($_horarioDocente["martes"]["dia"][1])
+    || !empty($_horarioDocente["miercoles"]["dia"][1])
+    || !empty($_horarioDocente["jueves"]["dia"][1])
+    || !empty($_horarioDocente["viernes"]["dia"][1])
+   ) {
+echo "<tr class='pure-table-odd'>"
+        . "<td colspan=8 align=center>"
+        .  "<label>Bloque N° 2</label>"
+        . "</td>"
+   . "</tr>";
+    echo "<tr>";
+            echo "<td><b>Asignatura</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["lunes"]["nombre_asignatura"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["martes"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["martes"]["nombre_asignatura"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["miercoles"]["nombre_asignatura"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["jueves"]["nombre_asignatura"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["viernes"]["nombre_asignatura"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    echo "<tr>";
+            echo "<td><b>Hora</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][1])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["lunes"]["hora_inicio"][1]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["lunes"]["hora_salida"][1]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif;  
+                if (!empty($_horarioDocente["martes"]["dia"][1])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["martes"]["hora_inicio"][1]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["martes"]["hora_salida"][1]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][1])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["miercoles"]["hora_inicio"][1]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["miercoles"]["hora_salida"][1]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][1])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["jueves"]["hora_inicio"][1]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["jueves"]["hora_salida"][1]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][1])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["viernes"]["hora_inicio"][1]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["viernes"]["hora_salida"][1]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    echo "<tr>";
+            echo "<td><b>Sección</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["lunes"]["seccion"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["martes"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["martes"]["seccion"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["miercoles"]["seccion"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["jueves"]["seccion"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["viernes"]["seccion"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    echo "<tr>";
+            echo "<td><b>Aula</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["lunes"]["aula"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["martes"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["martes"]["aula"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["miercoles"]["aula"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["jueves"]["aula"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][1])):   
+                    echo  "<td>" . $_horarioDocente["viernes"]["aula"][1] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    }
+    
+    
+if(!empty($_horarioDocente["lunes"]["dia"][2])
+    || !empty($_horarioDocente["martes"]["dia"][2])
+    || !empty($_horarioDocente["miercoles"]["dia"][2])
+    || !empty($_horarioDocente["jueves"]["dia"][2])
+    || !empty($_horarioDocente["viernes"]["dia"][2])
+   ) {
+echo "<tr class='pure-table-odd'>"
+        . "<td colspan=8 align=center>"
+        .  "<label>Bloque N° 3</label>"
+        . "</td>"
+   . "</tr>";
+    echo "<tr>";
+            echo "<td><b>Asignatura</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["lunes"]["nombre_asignatura"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["martes"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["martes"]["nombre_asignatura"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["miercoles"]["nombre_asignatura"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["jueves"]["nombre_asignatura"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["viernes"]["nombre_asignatura"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    echo "<tr>";
+            echo "<td><b>Hora</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][2])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["lunes"]["hora_inicio"][2]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["lunes"]["hora_salida"][2]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif;  
+                if (!empty($_horarioDocente["martes"]["dia"][2])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["martes"]["hora_inicio"][2]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["martes"]["hora_salida"][2]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][2])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["miercoles"]["hora_inicio"][2]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["miercoles"]["hora_salida"][2]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][2])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["jueves"]["hora_inicio"][2]) . " - " . AsistenteBasico::convertirHoraA12H($_horarioDocente["jueves"]["hora_salida"][2]) . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][2])):   
+                    echo  "<td>" . AsistenteBasico::convertirHoraA12H($_horarioDocente["viernes"]["hora_inicio"][2]) . " - " . $_horarioDocente["viernes"]["hora_salida"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    echo "<tr>";
+            echo "<td><b>Sección</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["lunes"]["seccion"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["martes"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["martes"]["seccion"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["miercoles"]["seccion"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["jueves"]["seccion"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["viernes"]["seccion"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    echo "<tr>";
+            echo "<td><b>Aula</b></td>"; 
+                if (!empty($_horarioDocente["lunes"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["lunes"]["aula"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["martes"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["martes"]["aula"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["miercoles"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["miercoles"]["aula"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["jueves"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["jueves"]["aula"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+                if (!empty($_horarioDocente["viernes"]["dia"][2])):   
+                    echo  "<td>" . $_horarioDocente["viernes"]["aula"][2] . "</td>"; 
+                else : 
+                    echo  "<td><center>-</center></td>"; 
+                endif; 
+    echo "</tr>";
+    }      
+?>
+        <tr>
+            <td colspan="4">
+                <label>Docente: </label>              
+                <?php echo $_cargaHoraria[0]["tipo_dni"] . "-" . $_cargaHoraria[0]["dni"] . " " . $_cargaHoraria[0]["nombre"] . " " . $_cargaHoraria[0]["apellido"]; ?>
+            </td>
+            <td colspan="2>"><!--<a href="javascript:window.print()"><img src="http://norfipc.com/img/icon/print.png" width="" height="" alt="" /></a>-->
+                Generar PDF <input type="image" src="<?php echo URLBASE; ?>/public/img/pdf.png">
+            </td>
+        </tr>
+    </tbody>
+</table>
+      <input type="hidden" name="dni_docente" value="<?php echo $_cargaHoraria[0]["dni"]; ?>">
+</form>

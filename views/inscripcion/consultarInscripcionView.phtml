@@ -1,0 +1,114 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+?>
+<div class="tema"><?php echo $tema; ?></div>
+
+<table class="pure-table pure-table-bordered" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Estudiante</th>
+            <th>Responsable</th>
+            <th>Fecha</th>
+            <th>Período</th>
+            <th >PDF</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php 
+	for ($i=0; $i<COUNT($_inscripcion); $i++):
+            if ($_inscripcion[$i]["dni_estudiante"] == $_inscripcion[$i]["dni_responsable"]):
+               $ver = "-";
+            else:
+               $ver = "<a href='" . URLBASE . "consultar-responsable/buscar/". $_inscripcion[$i]["dni_responsable"] ."'>" . $_inscripcion[$i]["dni_responsable"] . "</a>";
+            endif; 
+        echo "<tr>
+                <td align=center>" . $_inscripcion[$i]["id"] . "</td>
+                <td align=center><a href='" . URLBASE . "consultar-estudiante/buscar/". $_inscripcion[$i]["dni_estudiante"] ."'>" . $_inscripcion[$i]["dni_estudiante"] . "</a></td>
+                <td align=center><a href='" . URLBASE . "consultar-responsable/buscar/". $_inscripcion[$i]["dni_responsable"] ."'>" . $_inscripcion[$i]["dni_responsable"] . "</a></td>
+                <td align=center>" . AsistenteBasico::convertirFechaDdMmAaaa($_inscripcion[$i]["fecha_inscripcion"]) . "</td>
+                <td align=center>" . $_inscripcion[$i]["periodo_academico"] . "</td>   
+                <td title='PDF' align=center>
+                    <form method='POST' action='" . URLBASE . "generar-inscripcion' target='_blank'>
+                        <input type='hidden' name='id' value='" . $_inscripcion[$i]["id"] ."'>
+                        <input type='image'src='" . URLBASE . "public/img/pdf.png'/>
+                    </form>
+                </td> 
+            </tr>";
+	endfor; 
+        if ($inscritos > 0):
+        ?>
+            <tr class="pure-table-odd">
+                <td colspan="6" align="center">
+                    <label><?php echo "<u>" . $inscritos . " " . $estudiante = ($inscritos == 1) ? "estudiante</u>" : "estudiantes</u>"; ?> inscritos. Período escolar: <u><?php echo $_periodo[0]["periodo_academico"];?></u></label>      
+                    
+
+            </tr>
+<?php   else:
+?>
+            <tr class="pure-table-odd">
+                <td colspan="6" align="center">
+                    <label style="color:red;">Las inscripciones están cerradas</label>
+
+            </tr>
+<?php endif; ?>
+    </tbody>
+</table>
+<div class='paginador' align='center' >
+        <ul>
+            <li>
+            <?php if($params['primero']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['primero']; ?>">
+                <input type="button" value="Primera" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                    <input type="button" value="Primera" disabled class="btn-disabled" />
+            <?php	endif; ?>
+
+            </li>
+            <li>
+            <?php if($params['anterior']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['anterior']; ?>">
+                <input type="button" value="&larr; Anterior"  class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="&larr; Anterior" disabled class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['siguiente']):	?>
+                <a  class='parametro'  href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['siguiente']; ?>">
+                <input type="button" value="Siguiente &rarr;" class="btn-enabled" />
+                </a>	
+            <?php	else: ?>
+                <input type="button" value="Siguiente &rarr;" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+            <li>
+            <?php if($params['ultimo']):	?>
+                <a  class='parametro'  class='parametro' href="<?php echo URLBASE . $_GET["vista"]; ?>/pagina/<?php echo $params['ultimo']; ?>">
+                <input type="button" value="Última" class="btn-enabled" />
+                </a>
+            <?php	else: ?>
+                <input type="button" value="Última" class="btn-disabled" />
+            <?php	endif; ?>
+            </li>
+        </ul>
+    </div>
+<!--<?php if ($pagina < 2): ?>  
+    <div id='icono-papelera-y-regresar'>
+        <div id='sub-icono'>
+            <a href='javascript:void();' onClick="history.back();" title='Volver Atrás'>
+                <div id='imagen-volver'></div>
+                <div id='nombre-icono'>Volver Atrás</div>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>-->
