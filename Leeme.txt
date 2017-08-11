@@ -6,7 +6,7 @@ Lenagueje de programación: PHP5
 CONFIGURACIÓN:
 Configurar la ruta raiz en "config/config.php"
 Los datos de la conexión base de datos se encuestran en la ruta "db/dbPdo.php"
-
+La base de datos se encuentra ".sql" en la carpera "db" con el nombre "bd_sigarh.sql"
 
 Datos de acceso:
 User: miguel
